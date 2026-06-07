@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>鄉育官網｜網站色系規劃 · 繪製尋路藍圖紙系統</title>
+<style>
+  /* ════════════════════════════════════════════════════════════════
+     鄉育官網 · 色系規劃（基於圖一「繪製尋路」藍圖紙方向）
+     設計 token 全數定義於 :root，本頁即以自身系統呈現（dogfooding）。
+     ════════════════════════════════════════════════════════════════ */
+  :root{
+    /* ── 色階 · GREEN 鄉育綠（品牌脊椎，hue ≈ 95°） ── */
+    --green-50:#F2F8E9; --green-100:#E2F1CC; --green-200:#CBE7A2; --green-300:#ADD96F;
+    --green-400:#8DC63F; --green-500:#69A82A; --green-600:#4A9023; --green-700:#37701B;
+    --green-800:#285411; --green-900:#173309;
+    /* ── 色階 · ORANGE 暖陽橘（尋路光／主 CTA） ── */
+    --orange-50:#FEF2E3; --orange-100:#FCDDBC; --orange-200:#F9C287; --orange-300:#F7A748;
+    --orange-400:#F5921E; --orange-500:#DD7B11; --orange-600:#BC640B; --orange-700:#934D08;
+    --orange-800:#6B3905; --orange-900:#432309;
+    /* ── 色階 · GOLD 晨光黃（指引光） ── */
+    --gold-50:#FFFBE0; --gold-100:#FFF2AE; --gold-200:#FEE76B; --gold-300:#FDDE38;
+    --gold-400:#FCD600; --gold-500:#E2BC00; --gold-600:#B79600; --gold-700:#8A7000;
+    --gold-800:#5E4C00; --gold-900:#3A2F00;
+    /* ── 色階 · TEAL 藍圖青（冷色點綴／資訊／企業分眾） ── */
+    --teal-50:#E6F6F7; --teal-100:#C2EAEC; --teal-200:#92DADE; --teal-300:#5BBFC4;
+    --teal-400:#36A6AC; --teal-500:#228C92; --teal-600:#1A7479; --teal-700:#155D61;
+    --teal-800:#103F42; --teal-900:#0A2729;
+    /* ── 色階 · NEUTRAL 紙感中性（帶綠味，非純灰） ── */
+    --neutral-0:#FFFFFF; --neutral-50:#F6FAF3; --neutral-100:#EBF3E6; --neutral-200:#DBE6D3;
+    --neutral-300:#C3D2BA; --neutral-400:#9FB096; --neutral-500:#788A70; --neutral-600:#57674F;
+    --neutral-700:#3D4A37; --neutral-800:#283022; --neutral-900:#1F2A20;
+    /* ── 深色錨點（戲劇張力，去飽和藍綠暗部） ── */
+    --pine:#13332C; --fog-ink:#0C1A18;
+
+    /* ── 語意 token · 品牌 ── */
+    --brand:var(--green-600); --brand-strong:var(--green-700); --brand-bright:var(--green-400);
+    --accent:var(--orange-400); --accent-strong:var(--orange-600); --guide:var(--gold-400);
+    /* ── 語意 token · 表面 / 邊框 ── */
+    --bg-page:var(--neutral-0); --bg-paper:var(--neutral-100); --bg-sunken:var(--neutral-50);
+    --bg-raised:var(--neutral-0); --bg-anchor:var(--fog-ink);
+    --border-subtle:var(--neutral-200); --border:var(--neutral-300); --border-strong:var(--neutral-400);
+    /* ── 語意 token · 文字 ── */
+    --text-strong:var(--neutral-900); --text:#243021; --text-muted:var(--neutral-600);
+    --text-faint:var(--neutral-500); --text-link:var(--green-700);
+    --text-on-dark:#FFFDF8; --text-on-dark-muted:#B9CBBC; --text-on-accent:#2A1B05;
+    /* ── 語意 token · 狀態（獨立色相，與品牌可區隔） ── */
+    --success:#15935C; --success-bg:#E3F4EB; --success-border:#A7D9BE; --success-text:#0C6B43;
+    --warning:#B97309; --warning-bg:#FBEBD2; --warning-border:#EBC58C; --warning-text:#7A4B05;
+    --error:#D92D20;   --error-bg:#FCE7E5;   --error-border:#F3B2AC;   --error-text:#9A1B12;
+    --info:#1A7479;    --info-bg:#E0F1F2;    --info-border:#A2D7DB;    --info-text:#105155;
+    --coral:#FF7A5C;
+    /* ── 漸層 ── */
+    --grad-paper:linear-gradient(160deg,#FFFFFF 0%,#EBF3E6 100%);
+    --grad-brand:linear-gradient(120deg,#4A9023 0%,#8DC63F 100%);
+    --grad-sun:linear-gradient(120deg,#F5921E 0%,#FCD600 100%);
+    --grad-anchor:linear-gradient(168deg,#13332C 0%,#0C1A18 100%);
+    /* ── 工具 ── */
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,"Roboto Mono",monospace;
+    --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+    --radius:14px; --radius-sm:9px; --radius-lg:22px;
+    --shadow-sm:0 1px 2px rgba(20,40,24,.06),0 2px 8px rgba(20,40,24,.05);
+    --shadow:0 8px 26px rgba(20,40,24,.09);
+    --ease:cubic-bezier(.4,0,.2,1);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans); color:var(--text); line-height:1.6;
+    background:var(--bg-paper);
+    /* 藍圖紙底＋冷綠格線 */
+    background-image:
+      linear-gradient(rgba(74,144,35,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(74,144,35,.045) 1px,transparent 1px),
+      var(--grad-paper);
+    background-size:28px 28px,28px 28px,100% 100%;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold-200);color:var(--text-strong)}
+
+  /* ── 版心 ── */
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  section{padding:46px 0;border-top:1px dashed var(--border)}
+  section:first-of-type{border-top:0}
+
+  /* ── 頁首（藍圖草稿角標風） ── */
+  .hero{position:relative;padding:54px 0 40px}
+  .draftmark{position:absolute;top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--green-700);opacity:.62}
+  .draftmark.l{left:0} .draftmark.r{right:0;text-align:right}
+  .hero .corner{position:absolute;width:34px;height:34px;border:2px solid var(--green-600);opacity:.5}
+  .hero .corner.tl{top:0;left:-6px;border-right:0;border-bottom:0}
+  .hero .corner.br{bottom:14px;right:-6px;border-left:0;border-top:0}
+  .kicker{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:800;letter-spacing:.04em;
+    color:var(--brand-strong);background:var(--green-50);border:1px solid var(--green-200);
+    padding:7px 15px;border-radius:999px;margin:68px 0 22px}
+  .kicker .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(245,146,30,.18)}
+  .hero h1{font-size:clamp(30px,4.6vw,50px);line-height:1.18;font-weight:900;color:var(--text-strong);letter-spacing:-.01em}
+  .hero h1 .u{position:relative;white-space:nowrap}
+  .hero h1 .u::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.28em;background:var(--grad-sun);opacity:.85;border-radius:3px;z-index:-1}
+  .hero .lead{margin-top:20px;max-width:680px;font-size:16.5px;color:var(--text-muted)}
+  .hero .lead b{color:var(--text-strong);font-weight:700}
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .pill{font-family:var(--mono);font-size:11.5px;color:var(--text-muted);background:var(--bg-raised);
+    border:1px solid var(--border);border-radius:999px;padding:6px 13px}
+  .pill b{color:var(--brand-strong)}
+
+  /* ── 區段標題 ── */
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:26px;flex-wrap:wrap}
+  .sec-num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);flex:0 0 auto}
+  .sec-head h2{font-size:24px;font-weight:800;color:var(--text-strong);letter-spacing:-.01em}
+  .sec-head .en{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint)}
+  .sec-desc{max-width:760px;color:var(--text-muted);font-size:14.5px;margin:-12px 0 26px}
+  .sec-desc code{font-family:var(--mono);font-size:.92em;background:var(--green-50);color:var(--brand-strong);padding:1px 6px;border-radius:5px;border:1px solid var(--green-100)}
+
+  /* ── sticky 子導覽 ── */
+  .subnav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-subtle);margin-top:8px}
+  .subnav .inner{max-width:1120px;margin:0 auto;padding:10px 28px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}
+  .subnav .inner::-webkit-scrollbar{display:none}
+  .subnav a{flex:0 0 auto;font-size:12.5px;font-weight:700;color:var(--text-muted);text-decoration:none;
+    padding:6px 12px;border-radius:999px;border:1px solid transparent;transition:.15s var(--ease);white-space:nowrap}
+  .subnav a:hover{color:var(--brand-strong);background:var(--green-50);border-color:var(--green-100)}
+
+  /* ── 核心 5 色 hero swatch ── */
+  .core{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+  .core .c{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--bg-raised);box-shadow:var(--shadow-sm);cursor:pointer;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+  .core .c:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .core .c .fill{height:120px;position:relative}
+  .core .c .fill .role{position:absolute;left:13px;bottom:11px;font-size:11px;font-weight:800;letter-spacing:.03em;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.85);color:var(--text-strong)}
+  .core .c .body{padding:13px 14px 15px}
+  .core .c .nm{font-size:14px;font-weight:800;color:var(--text-strong)}
+  .core .c .en{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--text-faint);text-transform:uppercase;margin-top:2px}
+  .core .c .hx{font-family:var(--mono);font-size:12.5px;color:var(--text-muted);margin-top:9px;display:flex;align-items:center;gap:7px}
+  .core .c .hx .tok{color:var(--brand-strong)}
+
+  /* ── 色階 ramp ── */
+  .ramp{margin-bottom:20px}
+  .ramp .rlabel{display:flex;align-items:baseline;gap:10px;margin-bottom:9px}
+  .ramp .rlabel .nm{font-size:14px;font-weight:800;color:var(--text-strong)}
+  .ramp .rlabel .use{font-size:12.5px;color:var(--text-muted)}
+  .ramp .steps{display:grid;grid-template-columns:repeat(10,1fr);border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border)}
+  .ramp .step{height:62px;display:flex;flex-direction:column;justify-content:flex-end;padding:7px 8px;cursor:pointer;position:relative}
+  .ramp .step .k{font-family:var(--mono);font-size:10px;font-weight:700;opacity:.9}
+  .ramp .step .h{font-family:var(--mono);font-size:9px;opacity:.72;margin-top:1px}
+  .ramp .step .star{position:absolute;top:6px;right:7px;font-size:10px}
+
+  /* ── 語意 token 表 ── */
+  .tok-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .tok-table th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);font-weight:700;padding:12px 16px;background:var(--bg-sunken);border-bottom:1px solid var(--border)}
+  .tok-table td{padding:11px 16px;border-bottom:1px solid var(--border-subtle);vertical-align:middle}
+  .tok-table tr:last-child td{border-bottom:0}
+  .tok-table .sw{width:22px;height:22px;border-radius:6px;border:1px solid rgba(20,40,24,.14);display:inline-block;vertical-align:middle;margin-right:10px}
+  .tok-table .tk{font-family:var(--mono);font-size:12px;color:var(--brand-strong);font-weight:600}
+  .tok-table .hx{font-family:var(--mono);font-size:12px;color:var(--text-muted)}
+  .tok-table .ds{color:var(--text-muted)}
+
+  /* ── 明暗策略：淺底＋深錨點 ── */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .panel-light{background:var(--grad-paper);border:1px solid var(--border);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm)}
+  .panel-dark{background:var(--grad-anchor);border-radius:var(--radius);padding:26px;color:var(--text-on-dark);position:relative;overflow:hidden}
+  .panel-dark::after{content:"";position:absolute;width:160px;height:160px;right:-30px;top:-40px;border-radius:50%;background:radial-gradient(circle,rgba(252,214,0,.5),transparent 65%);filter:blur(6px)}
+  .panel h3{font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+  .panel-light h3{color:var(--brand-strong)} .panel-dark h3{color:var(--gold-400);position:relative;z-index:1}
+  .panel p{font-size:14px;line-height:1.7;position:relative;z-index:1}
+  .panel-light p{color:var(--text-muted)} .panel-dark p{color:var(--text-on-dark-muted)}
+  .panel .demo{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;position:relative;z-index:1}
+  .tagchip{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px}
+
+  /* ── 狀態色 alert ── */
+  .alerts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .alert{display:flex;gap:13px;padding:15px 17px;border-radius:var(--radius);border:1px solid;font-size:13.5px;line-height:1.6}
+  .alert .ic{width:24px;height:24px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px}
+  .alert .t{font-weight:800;margin-bottom:2px}
+  .alert.success{background:var(--success-bg);border-color:var(--success-border);color:var(--success-text)} .alert.success .ic{background:var(--success)}
+  .alert.warning{background:var(--warning-bg);border-color:var(--warning-border);color:var(--warning-text)} .alert.warning .ic{background:var(--warning)}
+  .alert.error{background:var(--error-bg);border-color:var(--error-border);color:var(--error-text)} .alert.error .ic{background:var(--error)}
+  .alert.info{background:var(--info-bg);border-color:var(--info-border);color:var(--info-text)} .alert.info .ic{background:var(--info)}
+  .alert .hx{font-family:var(--mono);font-size:11px;opacity:.8}
+
+  /* ── 分眾 accent ── */
+  .zones{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .zone{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg-raised);box-shadow:var(--shadow-sm)}
+  .zone .bar{height:7px}
+  .zone .z-in{padding:20px 22px}
+  .zone .ztag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 11px;border-radius:999px;margin-bottom:12px}
+  .zone h4{font-size:17px;font-weight:800;color:var(--text-strong)}
+  .zone p{font-size:13.5px;color:var(--text-muted);margin-top:7px;line-height:1.66}
+  .zone .z-chips{display:flex;gap:7px;margin-top:15px}
+  .zone .z-chips span{flex:1;height:30px;border-radius:7px;display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:rgba(0,0,0,.55);font-weight:700}
+
+  /* ── 漸層條 ── */
+  .grads{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .grad{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg-raised)}
+  .grad .g{height:84px}
+  .grad .g-in{padding:13px 16px}
+  .grad .nm{font-size:13.5px;font-weight:800;color:var(--text-strong)}
+  .grad .cs{font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-top:4px}
+
+  /* ── 無障礙矩陣 ── */
+  .matrix{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .matrix th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);font-weight:700;padding:11px 14px;background:var(--bg-sunken);border-bottom:1px solid var(--border)}
+  .matrix td{padding:10px 14px;border-bottom:1px solid var(--border-subtle)}
+  .matrix tr:last-child td{border-bottom:0}
+  .matrix .samp{font-weight:800;padding:6px 12px;border-radius:7px;font-size:13px;display:inline-block;min-width:118px;text-align:center}
+  .matrix .ratio{font-family:var(--mono);font-weight:700;font-size:14px;color:var(--text-strong)}
+  .badge{font-family:var(--mono);font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:6px;letter-spacing:.03em}
+  .badge.aaa{background:var(--success-bg);color:var(--success-text);border:1px solid var(--success-border)}
+  .badge.aa{background:var(--green-50);color:var(--brand-strong);border:1px solid var(--green-200)}
+  .badge.aa18{background:var(--gold-100);color:var(--gold-800);border:1px solid var(--gold-300)}
+  .badge.fail{background:var(--error-bg);color:var(--error-text);border:1px solid var(--error-border)}
+
+  /* ── 用色規則 do/don't ── */
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .rule{border-radius:var(--radius);padding:20px 22px;border:1px solid}
+  .rule.do{background:var(--success-bg);border-color:var(--success-border)}
+  .rule.dont{background:var(--error-bg);border-color:var(--error-border)}
+  .rule h4{font-size:14px;font-weight:800;display:flex;align-items:center;gap:9px;margin-bottom:13px}
+  .rule.do h4{color:var(--success-text)} .rule.dont h4{color:var(--error-text)}
+  .rule h4 .m{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:14px}
+  .rule.do h4 .m{background:var(--success)} .rule.dont h4 .m{background:var(--error)}
+  .rule ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .rule li{font-size:13.5px;line-height:1.6;color:var(--text);padding-left:20px;position:relative}
+  .rule li::before{position:absolute;left:0;top:0;font-weight:900}
+  .rule.do li::before{content:"✓";color:var(--success)} .rule.dont li::before{content:"✕";color:var(--error)}
+  .rule li b{font-weight:800}
+  .rule .ex{display:inline-block;font-family:var(--mono);font-size:12px;padding:1px 7px;border-radius:5px;margin:0 2px}
+
+  /* ── UI 元件示範 ── */
+  .demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .demo-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm)}
+  .demo-card h4{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-faint);font-weight:700;margin-bottom:16px}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:14px;font-weight:800;
+    padding:11px 20px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;transition:.16s var(--ease);text-decoration:none}
+  .btn-primary{background:var(--accent);color:var(--text-on-accent)}
+  .btn-primary:hover{background:var(--accent-strong);color:#fff}
+  .btn-brand{background:var(--brand);color:#fff}
+  .btn-brand:hover{background:var(--green-700)}
+  .btn-ghost{background:transparent;color:var(--brand-strong);border-color:var(--border-strong)}
+  .btn-ghost:hover{background:var(--green-50);border-color:var(--green-300)}
+  .btn-row{display:flex;flex-wrap:wrap;gap:11px;align-items:center}
+  .lk{color:var(--text-link);font-weight:700;text-decoration:none;border-bottom:2px solid var(--green-200);transition:.15s}
+  .lk:hover{color:var(--green-800);border-bottom-color:var(--green-500)}
+  .badges-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+  .bdg{font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px}
+  .bdg.g{background:var(--green-50);color:var(--brand-strong);border:1px solid var(--green-200)}
+  .bdg.o{background:var(--orange-50);color:var(--orange-700);border:1px solid var(--orange-200)}
+  .bdg.fill{background:var(--accent);color:var(--text-on-accent)}
+  .bdg.gold{background:var(--gold-400);color:var(--gold-900)}
+  .field{margin-top:4px}
+  .field label{display:block;font-size:12.5px;font-weight:700;color:var(--text-muted);margin-bottom:6px}
+  .field input{width:100%;font-family:var(--sans);font-size:14px;padding:11px 14px;border-radius:var(--radius-sm);
+    border:1.5px solid var(--border);background:var(--bg-page);color:var(--text-strong);transition:.15s}
+  .field input::placeholder{color:var(--text-faint)}
+  .field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(74,144,35,.16)}
+  .mini-card{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+  .mini-card .mc-top{height:64px;background:var(--grad-brand)}
+  .mini-card .mc-b{padding:13px 15px}
+  .mini-card .mc-b .t{font-weight:800;color:var(--text-strong);font-size:14px}
+  .mini-card .mc-b .d{font-size:12.5px;color:var(--text-muted);margin-top:3px}
+
+  /* ── 頁尾 ── */
+  footer.foot{background:var(--grad-anchor);color:var(--text-on-dark-muted);margin-top:30px}
+  footer.foot .wrap{padding:34px 28px 44px}
+  footer.foot .f-top{display:flex;align-items:center;gap:11px;color:var(--text-on-dark);font-weight:800;font-size:15px;margin-bottom:12px}
+  footer.foot .f-top .d{width:11px;height:11px;border-radius:50%;background:var(--gold-400);box-shadow:0 0 14px rgba(252,214,0,.7)}
+  footer.foot p{font-size:12.5px;line-height:1.8;max-width:880px}
+  footer.foot a{color:var(--gold-300);text-decoration:none}
+
+  /* ── toast ── */
+  #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;
+    background:var(--neutral-900);color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:999px;
+    box-shadow:var(--shadow);pointer-events:none;transition:.2s var(--ease);z-index:90;font-family:var(--mono)}
+  #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:880px){
+    .core{grid-template-columns:repeat(2,1fr)}
+    .split,.alerts,.zones,.grads,.rules,.demo-grid{grid-template-columns:1fr}
+    .ramp .steps{grid-template-columns:repeat(5,1fr)}
+    .hero .corner{display:none}
+    .matrix .samp{min-width:0}
+  }
+
+  /* ── 列印 / PDF 輸出 ── */
+  @media print{
+    @page{margin:12mm}
+    .subnav{position:static;background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;border-bottom:1px solid var(--border)}
+    #toast{display:none}
+    section{padding:28px 0}
+    .hero{padding:20px 0 28px}
+    .kicker{margin-top:34px}
+    .core .c,.ramp,.alert,.zone,.grad,.rule,.demo-card,.panel-light,.panel-dark,.mini-card,
+    .tok-table tr,.matrix tr{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .sec-head{break-inside:avoid;break-after:avoid}
+    .core .c:hover{transform:none;box-shadow:var(--shadow-sm)}
+    body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════ 頁首 ════════════ -->
+<header class="hero">
+  <div class="wrap" style="position:relative">
+    <span class="corner tl"></span><span class="corner br"></span>
+    <span class="draftmark l">鄉育 · COUNTRYEDU<br>COLOR_SYSTEM_v1</span>
+    <span class="draftmark r">PLOT YOUR PATH<br>SHEET 02 · 色彩藍圖</span>
+    <span class="kicker"><span class="dot"></span>網站色系規劃 · COLOR SYSTEM</span>
+    <h1>撥開職涯的迷霧，<br>把色彩畫成<span class="u">一張藍圖</span></h1>
+    <p class="lead">以圖一「繪製尋路」為定錨：<b>淺色藍圖紙</b>為全站基底，<b>鄉育綠 #4A9023</b> 是貫穿的結構線，<b>暖陽橘</b>是沿途節點與尋路光，<b>晨光黃</b>是迷霧中的指引。一套由「紙底 → 結構 → 光點」層層堆疊的色彩語言。</p>
+    <div class="meta-row">
+      <span class="pill">方向 · <b>淺色為主／深色作錨點</b></span>
+      <span class="pill">品牌主綠 · <b>#4A9023</b></span>
+      <span class="pill">無障礙 · <b>WCAG 2.1 AA</b></span>
+      <span class="pill">狀態 · 方向比稿，未最終定稿</span>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════ 子導覽 ════════════ -->
+<nav class="subnav">
+  <div class="inner">
+    <a href="#core">01 核心色票</a>
+    <a href="#ramps">02 完整色階</a>
+    <a href="#tokens">03 語意 Token</a>
+    <a href="#lightdark">04 明暗策略</a>
+    <a href="#states">05 狀態色</a>
+    <a href="#zones">06 分眾 Accent</a>
+    <a href="#grads">07 漸層</a>
+    <a href="#a11y">08 無障礙對比</a>
+    <a href="#rules">09 用色規則</a>
+    <a href="#ui">10 元件示範</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- 01 核心色票 -->
+  <section id="core">
+    <div class="sec-head"><span class="sec-num">01</span><h2>核心色票</h2><span class="en">Core Palette · 圖一定錨五色</span></div>
+    <p class="sec-desc">五個主色直接取自圖一。前三色是「會發光的角色」（結構、節點、指引），後兩色是「承載一切的紙」。點任一色卡可複製色碼。</p>
+    <div class="core" id="coreGrid"></div>
+  </section>
+
+  <!-- 02 完整色階 -->
+  <section id="ramps">
+    <div class="sec-head"><span class="sec-num">02</span><h2>完整色階</h2><span class="en">Tonal Ramps · 50–900</span></div>
+    <p class="sec-desc">每個主色相展開 10 階，供大面積、hover、邊框、文字各取所需。<span style="font-family:var(--mono);font-size:.92em">★</span> 標記為圖一原始定錨值；標 <b>AA</b> 者為「可於白底當文字」的安全階（深綠 <code>700</code>／深橘 <code>700</code> 起）。</p>
+    <div id="rampWrap"></div>
+  </section>
+
+  <!-- 03 語意 token -->
+  <section id="tokens">
+    <div class="sec-head"><span class="sec-num">03</span><h2>語意 Token</h2><span class="en">Semantic Tokens</span></div>
+    <p class="sec-desc">原始色階不直接在頁面使用；一律透過語意 token 套用，讓日後換色／調整只改一處。命名對齊 <code>0319-1</code> 既有 CSS 變數習慣。</p>
+    <table class="tok-table" id="tokTable">
+      <thead><tr><th>語意 Token</th><th>對應色階</th><th>HEX</th><th>用途</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- 04 明暗策略 -->
+  <section id="lightdark">
+    <div class="sec-head"><span class="sec-num">04</span><h2>明暗策略</h2><span class="en">Light-first · Dark as Anchor</span></div>
+    <p class="sec-desc">全站以淺色藍圖紙為主；深墨綠<b>不是</b>第二套主題，而是「錨點」——只出現在頁尾、Hero 疊罩、與少數需要戲劇張力的強調區。深底是發光色（金／葉芽綠）唯一能盡情發亮的舞台。</p>
+    <div class="split">
+      <div class="panel-light">
+        <h3>淺色 · 藍圖紙（主）</h3>
+        <p>白 ＋ 晨霧綠紙底承載 90% 內容：閱讀、表單、卡片、資料。結構用鄉育綠，互動用暖陽橘，文字用墨綠 ink。</p>
+        <div class="demo">
+          <span class="tagchip" style="background:var(--green-600);color:#fff">結構線 #4A9023</span>
+          <span class="tagchip" style="background:var(--accent);color:var(--text-on-accent)">節點 #F5921E</span>
+          <span class="tagchip" style="background:#fff;color:var(--text-strong);border:1px solid var(--border)">ink #1F2A20</span>
+        </div>
+      </div>
+      <div class="panel-dark">
+        <h3>深色 · 迷霧錨點（點綴）</h3>
+        <p>頁尾與 Hero 疊罩用霧夜墨綠 → 深林青。此時晨光黃、葉芽綠化為「迷霧中的光」，白字改用暖白 #FFFDF8。</p>
+        <div class="demo">
+          <span class="tagchip" style="background:var(--gold-400);color:var(--gold-900)">指引光 #FCD600</span>
+          <span class="tagchip" style="background:var(--green-400);color:var(--green-900)">葉芽 #8DC63F</span>
+          <span class="tagchip" style="background:rgba(255,255,255,.12);color:#FFFDF8">暖白字</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 狀態色 -->
+  <section id="states">
+    <div class="sec-head"><span class="sec-num">05</span><h2>狀態色</h2><span class="en">Semantic States · 獨立色相</span></div>
+    <p class="sec-desc">品牌綠＝成功、橘＝警告會語意打架，故狀態色<b>另立色相</b>：成功用偏冷祖母綠、警告用沉穩琥珀（與亮橘 CTA 區隔）、錯誤用正紅、資訊用藍圖青。品牌的綠／橘／黃只專職「品牌」，不兼任系統訊號。</p>
+    <div class="alerts" id="alertWrap"></div>
+  </section>
+
+  <!-- 06 分眾 accent -->
+  <section id="zones">
+    <div class="sec-head"><span class="sec-num">06</span><h2>分眾 Accent</h2><span class="en">Audience Sub-themes</span></div>
+    <p class="sec-desc">四大分眾共用同一套核心（藍圖紙＋鄉育綠脊椎），各配<b>一個輔助色</b>做導引與辨識——不換主色，只換「這一區的光是什麼顏色」。</p>
+    <div class="zones" id="zoneWrap"></div>
+  </section>
+
+  <!-- 07 漸層 -->
+  <section id="grads">
+    <div class="sec-head"><span class="sec-num">07</span><h2>漸層</h2><span class="en">Gradients</span></div>
+    <p class="sec-desc">四條語意漸層：紙底承載、尋路綠光（結構）、雙陽尋路光（鄉育 Logo 意象）、深色錨點。</p>
+    <div class="grads" id="gradWrap"></div>
+  </section>
+
+  <!-- 08 無障礙對比 -->
+  <section id="a11y">
+    <div class="sec-head"><span class="sec-num">08</span><h2>無障礙對比</h2><span class="en">Accessibility · WCAG 2.1</span></div>
+    <p class="sec-desc">下列對比值由本頁 JavaScript <b>即時計算</b>（非手填），確保準確。判準：正文 AA≥4.5、AAA≥7；大字／粗體（≥18.66px bold 或 24px）AA≥3。亮綠／橘／黃在白底僅適合大元素與圖形，<b>內文文字請改用各色相的深階</b>。</p>
+    <table class="matrix" id="matrix">
+      <thead><tr><th>前景 / 背景</th><th>預覽</th><th>對比值</th><th>正文</th><th>大字</th><th>判定</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- 09 用色規則 -->
+  <section id="rules">
+    <div class="sec-head"><span class="sec-num">09</span><h2>用色規則</h2><span class="en">Usage Do &amp; Don't</span></div>
+    <p class="sec-desc">幾條把上面對比結論落地的硬規則，避免「好看但讀不到」。</p>
+    <div class="rules">
+      <div class="rule do">
+        <h4><span class="m">✓</span>建議這樣用</h4>
+        <ul>
+          <li>白底內文用 <b>ink <span class="ex" style="background:var(--neutral-900);color:#fff">#1F2A20</span></b> 或 soft <span class="ex" style="background:#4C5A4A;color:#fff">#4C5A4A</span>。</li>
+          <li>需要「綠色文字」時，用 <b>深綠 <span class="ex" style="background:var(--green-700);color:#fff">#37701B</span></b>（白底 ≈6:1，過 AA）。</li>
+          <li>暖陽橘當填色按鈕時，配<b>深色字</b> <span class="ex" style="background:var(--accent);color:var(--text-on-accent)">#F5921E ＋ ink</span>。</li>
+          <li>晨光黃只當<b>填色／高光</b>，上面一律壓深字。</li>
+          <li>發光色（金／葉芽綠）留給<b>深色錨點</b>盡情發亮。</li>
+        </ul>
+      </div>
+      <div class="rule dont">
+        <h4><span class="m">✕</span>避免這樣用</h4>
+        <ul>
+          <li>別把亮綠 <span class="ex" style="background:#fff;color:var(--green-600);border:1px solid var(--border)">#4A9023</span> 當白底<b>內文</b>（≈3.96:1，未過 AA）。</li>
+          <li>別在暖陽橘上壓<b>白字</b> <span class="ex" style="background:var(--accent);color:#fff">≈2.6:1</span>，會讀不清。</li>
+          <li>別讓晨光黃 <span class="ex" style="background:#fff;color:var(--gold-400);border:1px solid var(--border)">#FCD600</span> 當白底文字（≈1.4:1）。</li>
+          <li>別用品牌綠當「成功」、橘當「警告」——交給<b>獨立狀態色</b>。</li>
+          <li>別把深色當第二主題大面積鋪；它是<b>錨點</b>，不是 dark mode。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 元件示範 -->
+  <section id="ui">
+    <div class="sec-head"><span class="sec-num">10</span><h2>元件示範</h2><span class="en">Components in Context</span></div>
+    <p class="sec-desc">用上述 token 實際組出常見元件，驗證系統「可落地、讀得到、有層次」。</p>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <h4>按鈕 Buttons</h4>
+        <div class="btn-row">
+          <button class="btn btn-primary">開始尋路 →</button>
+          <button class="btn btn-brand">了解計畫</button>
+          <button class="btn btn-ghost">下載簡章</button>
+        </div>
+        <div class="btn-row" style="margin-top:18px">
+          <span>文字連結：</span><a class="lk" href="#core">查看核心色票</a>
+        </div>
+      </div>
+      <div class="demo-card">
+        <h4>徽章 Badges</h4>
+        <div class="badges-row">
+          <span class="bdg fill">尋路計畫</span>
+          <span class="bdg gold">指引光</span>
+          <span class="bdg g">認識自己</span>
+          <span class="bdg o">跨界實戰</span>
+        </div>
+        <div class="badges-row" style="margin-top:14px">
+          <span class="bdg g">EXPLORE</span>
+          <span class="bdg g">EXPERIENCE</span>
+          <span class="bdg g">EXECUTE</span>
+        </div>
+      </div>
+      <div class="demo-card">
+        <h4>表單欄位 Form</h4>
+        <div class="field">
+          <label>你的 Email</label>
+          <input type="email" placeholder="name@example.com" />
+        </div>
+        <div class="field" style="margin-top:14px">
+          <label>聚焦態用品牌綠光環</label>
+          <input type="text" placeholder="點我看 focus ring" />
+        </div>
+      </div>
+      <div class="demo-card">
+        <h4>內容卡 Card</h4>
+        <div class="mini-card">
+          <div class="mc-top"></div>
+          <div class="mc-b">
+            <div class="t">你的專屬藍圖</div>
+            <div class="d">綠光封面 ＋ 紙底內文 ＋ 墨綠標題，層次分明。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════════════ 頁尾 ════════════ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="f-top"><span class="d"></span>鄉育官網 · 網站色系規劃 v1</div>
+    <p>本文件為<b style="color:#fff">色系方向比稿</b>，基於圖一「繪製尋路」藍圖紙方向，供鄉育教育基金會 × DropOut(琢奧) 對焦。色碼為設計目標值；定案後才進 <a href="#">0319-1</a> 程式碼，正式「網站專屬設計文件」依合約於上線後另出。對比值由本頁即時計算，符合 WCAG 2.1 AA。<br>← 回 <a href="banner-gallery.html">切角牆</a> ｜ <a href="banner-compare.html">兩案並陳比較</a></p>
+  </div>
+</footer>
+
+<div id="toast">已複製</div>
+
+<script>
+(function(){
+  "use strict";
+  /* ── 色彩工具：相對亮度與對比（WCAG 2.1） ── */
+  function lum(hex){
+    var c=hex.replace('#','');
+    if(c.length===3){c=c[0]+c[0]+c[1]+c[1]+c[2]+c[2];}
+    var r=parseInt(c.substr(0,2),16)/255,g=parseInt(c.substr(2,2),16)/255,b=parseInt(c.substr(4,2),16)/255;
+    function f(x){return x<=0.03928?x/12.92:Math.pow((x+0.055)/1.055,2.4);}
+    return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b);
+  }
+  function ratio(a,b){var L1=lum(a),L2=lum(b),hi=Math.max(L1,L2),lo=Math.min(L1,L2);return (hi+0.05)/(lo+0.05);}
+
+  /* ── 複製色碼 ── */
+  var toast=document.getElementById('toast'),tt;
+  function copy(text){
+    try{
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text);}
+      else{var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);}
+    }catch(e){}
+    toast.textContent='已複製 '+text;toast.classList.add('on');
+    clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on');},1200);
+  }
+
+  /* ── 資料：核心五色 ── */
+  var CORE=[
+    {nm:'鄉育綠',en:'BRAND GREEN',hex:'#4A9023',tok:'--brand',role:'結構／路徑',roleBg:'rgba(255,255,255,.88)'},
+    {nm:'暖陽橘',en:'MARIGOLD',hex:'#F5921E',tok:'--accent',role:'節點／尋路光',roleBg:'rgba(255,255,255,.88)'},
+    {nm:'晨光黃',en:'DAWN GOLD',hex:'#FCD600',tok:'--guide',role:'指引光',roleBg:'rgba(0,0,0,.06)'},
+    {nm:'晨霧綠',en:'MIST PAPER',hex:'#EBF3E6',tok:'--bg-paper',role:'藍圖紙底',roleBg:'rgba(0,0,0,.05)'},
+    {nm:'純白',en:'WHITE',hex:'#FFFFFF',tok:'--bg-page',role:'留白',roleBg:'rgba(0,0,0,.05)'}
+  ];
+  var cg=document.getElementById('coreGrid');
+  CORE.forEach(function(c){
+    var el=document.createElement('div');el.className='c';
+    var dark=lum(c.hex)>0.4?'#1F2A20':'#fff';
+    el.innerHTML='<div class="fill" style="background:'+c.hex+'">'
+      +'<span class="role" style="background:'+c.roleBg+';color:'+(lum(c.hex)>0.4?'#1F2A20':'#1F2A20')+'">'+c.role+'</span></div>'
+      +'<div class="body"><div class="nm">'+c.nm+'</div><div class="en">'+c.en+'</div>'
+      +'<div class="hx"><span class="tok">'+c.tok+'</span>·<span>'+c.hex+'</span></div></div>';
+    el.addEventListener('click',function(){copy(c.hex);});
+    cg.appendChild(el);
+  });
+
+  /* ── 資料：色階 ── */
+  var RAMPS=[
+    {nm:'GREEN 鄉育綠',use:'品牌脊椎 · 結構線',pre:'--green-',stars:['400','600','700'],aa:'700',steps:['#F2F8E9','#E2F1CC','#CBE7A2','#ADD96F','#8DC63F','#69A82A','#4A9023','#37701B','#285411','#173309']},
+    {nm:'ORANGE 暖陽橘',use:'尋路光 · 主要 CTA',pre:'--orange-',stars:['400'],aa:'700',steps:['#FEF2E3','#FCDDBC','#F9C287','#F7A748','#F5921E','#DD7B11','#BC640B','#934D08','#6B3905','#432309']},
+    {nm:'GOLD 晨光黃',use:'指引光 · 高光點',pre:'--gold-',stars:['400'],aa:'700',steps:['#FFFBE0','#FFF2AE','#FEE76B','#FDDE38','#FCD600','#E2BC00','#B79600','#8A7000','#5E4C00','#3A2F00']},
+    {nm:'TEAL 藍圖青',use:'冷色點綴 · 資訊',pre:'--teal-',stars:['300'],aa:'700',steps:['#E6F6F7','#C2EAEC','#92DADE','#5BBFC4','#36A6AC','#228C92','#1A7479','#155D61','#103F42','#0A2729']},
+    {nm:'NEUTRAL 紙感中性',use:'表面 · 邊框 · 文字',pre:'--neutral-',stars:['100','900'],aa:'600',steps:['#FFFFFF','#F6FAF3','#EBF3E6','#DBE6D3','#C3D2BA','#9FB096','#788A70','#57674F','#3D4A37','#283022']}
+  ];
+  var keys=['50','100','200','300','400','500','600','700','800','900'];
+  var rw=document.getElementById('rampWrap');
+  RAMPS.forEach(function(r){
+    var box=document.createElement('div');box.className='ramp';
+    var html='<div class="rlabel"><span class="nm">'+r.nm+'</span><span class="use">'+r.use+'</span></div><div class="steps">';
+    r.steps.forEach(function(hex,i){
+      var k=keys[i];
+      var dark=lum(hex)>0.42?'#1F2A20':'#fff';
+      var star=r.stars.indexOf(k)>-1?'<span class="star">★</span>':'';
+      var aa=(k===r.aa)?' AA':'';
+      html+='<div class="step" data-hex="'+hex+'" style="background:'+hex+';color:'+dark+'">'+star
+        +'<span class="k">'+k+aa+'</span><span class="h">'+hex+'</span></div>';
+    });
+    html+='</div>';box.innerHTML=html;rw.appendChild(box);
+  });
+  rw.addEventListener('click',function(e){var s=e.target.closest('.step');if(s)copy(s.dataset.hex);});
+
+  /* ── 資料：語意 token ── */
+  var TOK=[
+    ['--brand','green-600','#4A9023','品牌主色：主結構、品牌綠'],
+    ['--brand-strong','green-700','#37701B','綠色文字／hover（白底達 AA）'],
+    ['--brand-bright','green-400','#8DC63F','葉芽高光（深底發光）'],
+    ['--accent','orange-400','#F5921E','主要 CTA、節點、尋路光'],
+    ['--accent-strong','orange-600','#BC640B','CTA hover／橘色文字'],
+    ['--guide','gold-400','#FCD600','指引光、高光（壓深字）'],
+    ['--bg-page','neutral-0','#FFFFFF','頁面主底、卡片底'],
+    ['--bg-paper','neutral-100','#EBF3E6','區塊交替底、藍圖紙'],
+    ['--bg-anchor','fog-ink','#0C1A18','深色錨點：頁尾、Hero 疊罩'],
+    ['--border','neutral-300','#C3D2BA','預設邊框、分隔線'],
+    ['--text-strong','neutral-900','#1F2A20','標題、強調文字'],
+    ['--text','—','#243021','一般內文'],
+    ['--text-muted','neutral-600','#57674F','次要說明、註解'],
+    ['--text-link','green-700','#37701B','連結文字'],
+    ['--text-on-dark','—','#FFFDF8','深底暖白文字']
+  ];
+  var tb=document.querySelector('#tokTable tbody');
+  TOK.forEach(function(t){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><span class="sw" style="background:'+t[2]+'"></span><span class="tk">'+t[0]+'</span></td>'
+      +'<td class="hx">'+t[1]+'</td><td class="hx" data-hex="'+t[2]+'" style="cursor:pointer">'+t[2]+'</td><td class="ds">'+t[3]+'</td>';
+    tb.appendChild(tr);
+  });
+  tb.addEventListener('click',function(e){var c=e.target.closest('[data-hex]');if(c)copy(c.dataset.hex);});
+
+  /* ── 資料：狀態色 ── */
+  var STATE=[
+    {k:'success',ic:'✓',t:'成功 Success',d:'報名完成、資料已儲存。',hex:'#15935C'},
+    {k:'warning',ic:'!',t:'警告 Warning',d:'沉穩琥珀，與亮橘 CTA 明確區隔。',hex:'#B97309'},
+    {k:'error',ic:'✕',t:'錯誤 Error',d:'表單驗證失敗、操作中斷。',hex:'#D92D20'},
+    {k:'info',ic:'i',t:'資訊 Info',d:'藍圖青，中性提示與說明。',hex:'#1A7479'}
+  ];
+  var aw=document.getElementById('alertWrap');
+  STATE.forEach(function(s){
+    var el=document.createElement('div');el.className='alert '+s.k;
+    el.innerHTML='<span class="ic">'+s.ic+'</span><div><div class="t">'+s.t+'</div><div>'+s.d+' <span class="hx">'+s.hex+'</span></div></div>';
+    aw.appendChild(el);
+  });
+
+  /* ── 資料：分眾 accent ── */
+  var ZONES=[
+    {tag:'大學生 STUDENTS',h:'大學生專區',d:'主要 TA。以暖陽橘為導引——沿著節點與尋路光，主動畫出自己的藍圖。',accent:'#F5921E',tagC:'#2A1B05',chips:['#4A9023','#F5921E','#FCD600']},
+    {tag:'企業 ENTERPRISE',h:'企業專區',d:'以藍圖青為導引——專業、信任、跨界合作的冷靜調性。',accent:'#1A7479',tagC:'#fff',chips:['#4A9023','#1A7479','#92DADE']},
+    {tag:'捐贈者 DONORS',h:'個人捐贈者專區',d:'以珊瑚暖為導引——溫度、感謝與人的連結。',accent:'#FF7A5C',tagC:'#3A1206',chips:['#4A9023','#FF7A5C','#FCD600']},
+    {tag:'院校 UNIVERSITY',h:'大學院校專區',d:'以深松綠為導引——學術、穩重、長期合作關係。',accent:'#2E6B4E',tagC:'#fff',chips:['#4A9023','#2E6B4E','#CBE7A2']}
+  ];
+  var zw=document.getElementById('zoneWrap');
+  ZONES.forEach(function(z){
+    var el=document.createElement('div');el.className='zone';
+    var chips=z.chips.map(function(h){var d=lum(h)>0.42?'rgba(0,0,0,.55)':'rgba(255,255,255,.85)';return '<span style="background:'+h+';color:'+d+'">'+h+'</span>';}).join('');
+    el.innerHTML='<div class="bar" style="background:'+z.accent+'"></div><div class="z-in">'
+      +'<span class="ztag" style="background:'+z.accent+';color:'+z.tagC+'">'+z.tag+'</span>'
+      +'<h4>'+z.h+'</h4><p>'+z.d+'</p><div class="z-chips">'+chips+'</div></div>';
+    zw.appendChild(el);
+  });
+
+  /* ── 資料：漸層 ── */
+  var GRADS=[
+    {nm:'藍圖紙底 Paper',cs:'#FFFFFF → #EBF3E6',g:'linear-gradient(160deg,#FFFFFF,#EBF3E6)'},
+    {nm:'尋路綠光 Brand',cs:'#4A9023 → #8DC63F',g:'linear-gradient(120deg,#4A9023,#8DC63F)'},
+    {nm:'雙陽尋路光 Sun',cs:'#F5921E → #FCD600',g:'linear-gradient(120deg,#F5921E,#FCD600)'},
+    {nm:'深色錨點 Anchor',cs:'#13332C → #0C1A18',g:'linear-gradient(168deg,#13332C,#0C1A18)'}
+  ];
+  var gw=document.getElementById('gradWrap');
+  GRADS.forEach(function(g){
+    var el=document.createElement('div');el.className='grad';
+    el.innerHTML='<div class="g" style="background:'+g.g+'"></div><div class="g-in"><div class="nm">'+g.nm+'</div><div class="cs">'+g.cs+'</div></div>';
+    gw.appendChild(el);
+  });
+
+  /* ── 無障礙對比矩陣（即時計算） ── */
+  var PAIRS=[
+    {label:'ink #1F2A20 / 白',fg:'#1F2A20',bg:'#FFFFFF'},
+    {label:'soft #4C5A4A / 白',fg:'#4C5A4A',bg:'#FFFFFF'},
+    {label:'深綠 #37701B / 白',fg:'#37701B',bg:'#FFFFFF'},
+    {label:'亮綠 #4A9023 / 白',fg:'#4A9023',bg:'#FFFFFF'},
+    {label:'深橘 #934D08 / 白',fg:'#934D08',bg:'#FFFFFF'},
+    {label:'暖陽橘 #F5921E / 白',fg:'#F5921E',bg:'#FFFFFF'},
+    {label:'晨光黃 #FCD600 / 白',fg:'#FCD600',bg:'#FFFFFF'},
+    {label:'ink #1F2A20 / 紙底 #EBF3E6',fg:'#1F2A20',bg:'#EBF3E6'},
+    {label:'ink #2A1B05 / 橘 #F5921E',fg:'#2A1B05',bg:'#F5921E'},
+    {label:'白 / 橘 #F5921E',fg:'#FFFFFF',bg:'#F5921E'},
+    {label:'暖白 #FFFDF8 / 墨綠 #0C1A18',fg:'#FFFDF8',bg:'#0C1A18'},
+    {label:'晨光黃 #FCD600 / 墨綠 #0C1A18',fg:'#FCD600',bg:'#0C1A18'}
+  ];
+  var mb=document.querySelector('#matrix tbody');
+  PAIRS.forEach(function(p){
+    var r=ratio(p.fg,p.bg),rr=Math.round(r*100)/100;
+    var body=r>=7?'AAA':(r>=4.5?'AA':'—');
+    var bodyCls=r>=7?'aaa':(r>=4.5?'aa':'fail');
+    var large=r>=4.5?'AAA':(r>=3?'AA':'—');
+    var largeCls=r>=4.5?'aaa':(r>=3?'aa18':'fail');
+    var verdict=r>=4.5?'內文可用':(r>=3?'限大字／圖形':'僅裝飾');
+    var vCls=r>=4.5?'aaa':(r>=3?'aa18':'fail');
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td style="font-family:var(--mono);font-size:12px;color:var(--text-muted)">'+p.label+'</td>'
+      +'<td><span class="samp" style="color:'+p.fg+';background:'+p.bg+';border:1px solid rgba(20,40,24,.12)">尋路 Aa</span></td>'
+      +'<td class="ratio">'+rr.toFixed(2)+':1</td>'
+      +'<td><span class="badge '+bodyCls+'">'+body+'</span></td>'
+      +'<td><span class="badge '+largeCls+'">'+large+'</span></td>'
+      +'<td><span class="badge '+vCls+'">'+verdict+'</span></td>';
+    mb.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>
