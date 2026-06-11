@@ -1,0 +1,92 @@
+/* ──────────────────────────────────────────────────────────────
+   鄉育官網 視覺系統 v2 — 設計 token
+   依客戶 banner 參考圖重定調（2026-06-08）
+   色彩萃取自 design/banner-refs/ 的兩張 banner（高彩度重點色）
+   ────────────────────────────────────────────────────────────── */
+:root{
+  /* 品牌主綠｜鮮葉綠 H≈80（banner #669E05 / #74A120 / #95B441） */
+  --brand-50:#EFF6E1;
+  --brand-100:#DDECC3;
+  --brand-200:#C4DE97;
+  --brand-300:#A6CB62;
+  --brand-400:#8BBC3D;
+  --brand-500:#6FA315;   /* 主綠 */
+  --brand-600:#5B8810;   /* 大字/AA 文字 */
+  --brand-700:#46680C;
+  --brand:var(--brand-500);
+
+  /* 重點橘｜飽和暖橘 H≈28（banner #F16F06 / #ED8626） */
+  --accent-100:#FDE7D2;
+  --accent-200:#FACBA1;
+  --accent-300:#F8A65C;
+  --accent-400:#F78C30;
+  --accent-500:#F1700A;  /* 主橘 */
+  --accent-600:#D35E06;
+  --accent:var(--accent-500);
+
+  /* 輔助金黃｜H≈48（banner #E7C12C / #E9D252） */
+  --gold-300:#F3DD80;
+  --gold-500:#E9C42E;
+  --gold-600:#C7A211;
+  --gold:var(--gold-500);
+
+  /* 深色錨點｜深墨綠（取自圖2 深底，僅頁尾／Hero 疊罩） */
+  --ink-900:#12231A;
+  --ink-800:#1C3326;
+  --ink-700:#274836;
+  --ink:var(--ink-900);
+
+  /* 中性・紙｜暖白（banner 米色底 #F6F5EA） */
+  --paper:#FBFAF3;
+  --surface:#FFFFFF;
+  --line:#E7E3D3;
+  --text:#20281E;
+  --text-soft:#535C4F;
+  --text-mute:#888F7C;
+
+  /* 語意狀態色｜與品牌另立色相 */
+  --success:#15935C;
+  --warning:#B97309;
+  --error:#D92D20;
+  --info:#1A7479;
+
+  /* 字體 */
+  --font-sans:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --fw-black:800; --fw-bold:700; --fw-med:500; --fw-reg:400;
+
+  /* 圓角・陰影 */
+  --r-sm:8px; --r-md:14px; --r-lg:22px; --r-pill:999px;
+  --shadow-sm:0 2px 10px rgba(18,35,26,.07);
+  --shadow-md:0 12px 32px rgba(18,35,26,.12);
+  --shadow-lg:0 28px 64px rgba(18,35,26,.20);
+
+  /* 尋路漸層（橘→綠，路徑線用） */
+  --route:linear-gradient(90deg,var(--accent-500),var(--gold-500),var(--brand-500));
+}
+
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;font-family:var(--font-sans);color:var(--text);background:var(--paper)}
+
+/* ── 共用元件 ── */
+.btn{display:inline-flex;align-items:center;gap:.5em;font-family:var(--font-sans);
+  font-weight:var(--fw-bold);border:0;border-radius:var(--r-pill);cursor:pointer;
+  text-decoration:none;line-height:1;transition:transform .16s ease,box-shadow .16s ease,background .16s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-lg{padding:16px 30px;font-size:17px}
+.btn-md{padding:12px 22px;font-size:15px}
+.btn-brand{background:var(--brand-500);color:#fff;box-shadow:0 8px 20px rgba(111,163,21,.34)}
+.btn-brand:hover{background:var(--brand-600)}
+.btn-accent{background:var(--accent-500);color:#fff;box-shadow:0 8px 20px rgba(241,112,10,.34)}
+.btn-accent:hover{background:var(--accent-600)}
+.btn-ghost{background:transparent;color:var(--text);border:1.6px solid var(--line)}
+.btn-ghost:hover{border-color:var(--brand-400);color:var(--brand-600)}
+.btn-on-dark{background:#fff;color:var(--ink-900)}
+
+/* 橘色強調字（banner headline 手法：把關鍵詞挑出來上橘色） */
+.hl{color:var(--accent-500)}
+.hl-g{color:var(--brand-500)}
+
+/* 尋路節點圓點 */
+.node{display:inline-block;width:14px;height:14px;border-radius:50%;
+  background:var(--accent-500);box-shadow:0 0 0 4px rgba(241,112,10,.18)}

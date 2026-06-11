@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero A · 暖人本攝影（圖1 路線）</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  .nav{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;
+    gap:26px;padding:22px 40px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:var(--fw-black);font-size:18px;color:#fff}
+  .mark{width:38px;height:38px;flex:0 0 38px}
+  .nav nav{display:flex;gap:24px;margin-left:18px}
+  .nav nav a{color:rgba(255,255,255,.92);text-decoration:none;font-weight:var(--fw-med);font-size:15px}
+  .nav nav a:hover{color:#fff}
+  .nav .spacer{flex:1}
+  @media(max-width:860px){.nav nav{display:none}}
+
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+  .photo{position:absolute;inset:0;background:
+    radial-gradient(130% 95% at 82% 8%, rgba(233,196,46,.60), transparent 48%),
+    radial-gradient(110% 85% at 18% 95%, rgba(111,163,21,.55), transparent 60%),
+    linear-gradient(118deg,#365c1a,#5e8f17 52%,#A6CB62)}
+  .photo::after{content:"";position:absolute;inset:0;background:
+    linear-gradient(92deg, rgba(8,20,10,.62), rgba(8,20,10,.20) 46%, transparent 62%),
+    linear-gradient(0deg, rgba(8,20,10,.45), transparent 38%)}
+  .ph-tag{position:absolute;top:96px;right:34px;z-index:4;display:flex;align-items:center;gap:7px;
+    background:rgba(255,255,255,.16);backdrop-filter:blur(4px);color:#fff;font-size:12.5px;
+    font-weight:var(--fw-med);padding:7px 13px;border-radius:var(--r-pill);border:1px dashed rgba(255,255,255,.5)}
+  /* 淡淡的尋路母題（hybrid：暖人本為主，尋路為輔） */
+  .route{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.85}
+
+  .copy{position:relative;z-index:4;max-width:1180px;margin:0 auto;width:100%;padding:0 40px 18px}
+  .eyebrow{display:inline-block;color:#fff;background:rgba(255,255,255,.18);
+    font-weight:var(--fw-bold);font-size:13px;padding:6px 14px;border-radius:var(--r-pill);margin-bottom:18px}
+  h1{color:#fff;font-size:clamp(38px,6vw,68px);font-weight:var(--fw-black);line-height:1.08;
+    letter-spacing:-.01em;margin:0 0 18px;text-shadow:0 2px 24px rgba(0,0,0,.25)}
+  h1 .hl{color:var(--gold-500)}
+  .lead{color:rgba(255,255,255,.94);font-size:clamp(16px,2vw,20px);max-width:40ch;margin:0 0 28px;line-height:1.6}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+
+  .stats{position:relative;z-index:4;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);
+    margin-top:34px}
+  .stats .row{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);
+    gap:0;padding:0 40px}
+  .stat{display:flex;align-items:center;gap:14px;padding:26px 8px}
+  .stat+.stat{border-left:1px solid var(--line)}
+  .ico{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;flex:0 0 50px;color:#fff;font-size:22px}
+  .stat b{display:block;font-size:30px;font-weight:var(--fw-black);line-height:1;color:var(--text)}
+  .stat span{font-size:14px;color:var(--text-soft)}
+  @media(max-width:760px){.stats .row{grid-template-columns:repeat(2,1fr);gap:0}.stat:nth-child(3){border-left:0}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="11" fill="#fff"/>
+      <path d="M9 27 C16 27 16 14 24 14 S31 21 32 12" stroke="#6FA315" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+      <circle cx="9" cy="27" r="3.4" fill="#F1700A"/><circle cx="31.5" cy="12.5" r="3.6" fill="#E9C42E"/>
+    </svg>
+    鄉育教育基金會
+  </div>
+  <nav><a>關於我們</a><a>尋路計劃</a><a>分眾專區</a><a>影響力</a><a>最新消息</a></nav>
+  <div class="spacer"></div>
+  <a class="btn btn-md btn-brand">立即報名</a>
+</header>
+
+<main class="hero">
+  <div class="photo"></div>
+  <div class="ph-tag">📷 真實學生攝影區 · 客戶提供素材</div>
+  <svg class="route" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <path d="M-40,760 C260,760 320,560 620,560 S980,470 1100,300 1240,150 1500,140" fill="none"
+      stroke="rgba(255,255,255,.55)" stroke-width="2.5" stroke-dasharray="1 16" stroke-linecap="round"/>
+  </svg>
+
+  <div class="copy">
+    <span class="eyebrow">財團法人鄉育教育基金會</span>
+    <h1>給青年一個<span class="hl">機會</span><br>改變<span class="hl">未來</span>的力量</h1>
+    <p class="lead">陪伴每一位青年撥開職涯迷霧，探索自我、釐清方向、勇敢前行。</p>
+    <div class="cta">
+      <a class="btn btn-lg btn-brand">了解我們的故事</a>
+      <a class="btn btn-lg btn-on-dark">支持我們 ↗</a>
+    </div>
+  </div>
+
+  <div class="stats"><div class="row">
+    <div class="stat"><div class="ico" style="background:var(--brand-500)">🌱</div><div><b>3,000+</b><span>服務青年</span></div></div>
+    <div class="stat"><div class="ico" style="background:var(--gold-600)">🏫</div><div><b>50+</b><span>合作學校</span></div></div>
+    <div class="stat"><div class="ico" style="background:var(--accent-500)">🧭</div><div><b>30+</b><span>尋路計劃</span></div></div>
+    <div class="stat"><div class="ico" style="background:var(--info)">🤝</div><div><b>100+</b><span>志工夥伴</span></div></div>
+  </div></div>
+</main>
+
+</body>
+</html>

@@ -1,164 +1,72 @@
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, School, Building2, Quote } from "lucide-react"
+import type { Metadata } from "next"
+import { MapPin } from "lucide-react"
+import { PageHeader, Section, SectionHeading, findCrumbs } from "@/components/page-shell"
+import { ScrollReveal } from "@/components/scroll-reveal"
+import { pageMeta } from "@/lib/seo"
+import { partners } from "@/lib/site"
 
-export const metadata = {
-  title: "學校與企業回饋 | 財團法人鄉育教育基金會",
-  description: "聽聽合作學校與企業對財團法人鄉育教育基金會的回饋與推薦。",
-}
+export const metadata: Metadata = pageMeta({
+  title: "合作夥伴",
+  description: "與企業、大學與公益組織同行——鄉育的合作網絡遍及全台 12 縣市。",
+  path: "/impact/partners",
+})
 
-const schoolTestimonials = [
-  {
-    quote: "將鄉育的課程導入系上後，學生的學習動機明顯提升。他們開始主動思考未來，而不是被動等待畢業。",
-    name: "王教授",
-    role: "某國立大學系主任",
-    institution: "北部知名大學",
-  },
-  {
-    quote: "鄉育的課程設計非常紮實，結合理論與實作。學生在課後的就業表現也有明顯提升。",
-    name: "李副教授",
-    role: "職涯發展中心主任",
-    institution: "中部知名大學",
-  },
-  {
-    quote: "我們系上的學生常常不知道畢業後要做什麼，鄉育的課程正好補足了這個缺口。",
-    name: "陳老師",
-    role: "通識教育中心講師",
-    institution: "南部私立大學",
-  },
-]
+/** 合作夥伴頁。企業 Logo 授權未確認前一律以文字呈現（會議決議），授權後再替換為 logo 牆。 */
+const GROUPS = [
+  { title: "企業夥伴", desc: "以導師、參訪與資源投入，陪青年走進真實世界。", items: partners.companies },
+  { title: "合作大專院校", desc: "把尋路計畫帶進課堂，與我們共創 16 週的學習旅程。", items: partners.schools },
+  { title: "公益夥伴", desc: "攜手把探索的機會，帶給更多資源受限的青年。", items: partners.ngos },
+] as const
 
-const companyTestimonials = [
-  {
-    quote: "鄉育的學生展現出的主動性和解決問題的能力，遠超過一般大學生。他們在專案中提出的創新方案，讓我們團隊都印象深刻。",
-    name: "陳經理",
-    role: "人力資源主管",
-    company: "某科技公司",
-  },
-  {
-    quote: "透過企業專案的合作，我們提前接觸到有潛力的人才。其中幾位學員畢業後已經加入我們公司。",
-    name: "林總監",
-    role: "產品開發總監",
-    company: "某新創公司",
-  },
-  {
-    quote: "與鄉育合作讓我們看見年輕人不一樣的面向。他們的創意和熱情，為公司注入新的活力。",
-    name: "張副總",
-    role: "營運副總經理",
-    company: "某傳統產業",
-  },
-  {
-    quote: "我們很欣賞鄉育培養出來的學生具備的軟實力，特別是溝通能力和團隊合作精神。",
-    name: "黃經理",
-    role: "人才發展經理",
-    company: "某金融機構",
-  },
-]
-
-export default function ImpactPartnersPage() {
+export default function Page() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navigation />
-      <main className="flex-1">
-        {/* Hero */}
-        <section className="border-b border-border bg-gradient-to-b from-primary/5 to-background py-20 lg:py-28">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-3xl">
-              <Link href="/impact" className="mb-4 inline-flex items-center gap-1 text-sm text-primary hover:underline">
-                <ArrowRight className="h-4 w-4 rotate-180" />
-                返回影響力
-              </Link>
-              <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-                學校與企業回饋
-              </h1>
-              <p className="mt-6 text-pretty text-lg leading-relaxed text-muted-foreground">
-                聽聽我們的合作夥伴怎麼說。
-              </p>
-            </div>
-          </div>
-        </section>
+    <>
+      <PageHeader
+        eyebrow="影響力・同行"
+        title="一起開路的夥伴"
+        lead="這條路不是鄉育一個人走出來的——企業、學校與公益組織，都是路上的同行者。"
+        crumbs={findCrumbs("/impact/partners")}
+      />
 
-        {/* School Testimonials */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-5xl">
-              <div className="mb-8 flex items-center gap-3">
-                <School className="h-6 w-6 text-primary" />
-                <h2 className="text-2xl font-bold tracking-tight text-foreground">學校夥伴的聲音</h2>
-              </div>
-              
-              <div className="grid gap-6 md:grid-cols-3">
-                {schoolTestimonials.map((item, index) => (
-                  <div key={index} className="relative rounded-xl border border-border bg-card p-6 transition-colors hover:border-[#C7FF3A]/30">
-                    <span className="pointer-events-none absolute left-4 top-4 h-1.5 w-10 rounded-full bg-[#C7FF3A]" aria-hidden />
-                    <Quote className="mb-4 h-8 w-8 text-primary/30" />
-                    <blockquote className="mb-6 text-foreground leading-relaxed">
-                      &ldquo;{item.quote}&rdquo;
-                    </blockquote>
-                    <div className="border-t border-border pt-4">
-                      <p className="font-semibold text-foreground">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">{item.role}</p>
-                      <p className="text-sm text-primary">{item.institution}</p>
-                    </div>
-                  </div>
+      <Section>
+        <div className="space-y-12">
+          {GROUPS.map((g, gi) => (
+            <ScrollReveal key={g.title} delay={gi * 100}>
+              <h2 className="text-2xl font-bold text-foreground">{g.title}</h2>
+              <p className="mt-1 text-sm text-muted-foreground">{g.desc}</p>
+              <ul className="mt-5 flex flex-wrap gap-3">
+                {g.items.map((name) => (
+                  <li
+                    key={name}
+                    className="rounded-full border border-border bg-card px-5 py-2.5 font-medium text-foreground/85"
+                  >
+                    {name}
+                  </li>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
+              </ul>
+            </ScrollReveal>
+          ))}
+        </div>
+      </Section>
 
-        {/* Company Testimonials */}
-        <section className="border-y border-border bg-muted/30 py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-5xl">
-              <div className="mb-8 flex items-center gap-3">
-                <Building2 className="h-6 w-6 text-primary" />
-                <h2 className="text-2xl font-bold tracking-tight text-foreground">企業夥伴的聲音</h2>
+      <Section muted>
+        <SectionHeading
+          align="center"
+          eyebrow="足跡遍及"
+          title={`${partners.counties.length} 個縣市，路越走越遠`}
+          description="從本島到離島，從都會到非山非市——探索的機會，不該由出生地決定。"
+        />
+        <div className="mx-auto mt-10 grid max-w-3xl grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
+          {partners.counties.map((c, i) => (
+            <ScrollReveal key={c} delay={i * 60}>
+              <div className="flex items-center justify-center gap-1.5 rounded-2xl border border-border bg-card px-3 py-3 text-sm font-semibold text-foreground">
+                <MapPin className="size-3.5 text-primary" aria-hidden="true" />
+                {c}
               </div>
-              
-              <div className="grid gap-6 md:grid-cols-2">
-                {companyTestimonials.map((item, index) => (
-                  <div key={index} className="relative rounded-xl border border-border bg-card p-6 transition-colors hover:border-[#C7FF3A]/30">
-                    <span className="pointer-events-none absolute left-4 top-4 h-1.5 w-10 rounded-full bg-[#C7FF3A]" aria-hidden />
-                    <Quote className="mb-4 h-8 w-8 text-accent/30" />
-                    <blockquote className="mb-6 text-foreground leading-relaxed">
-                      &ldquo;{item.quote}&rdquo;
-                    </blockquote>
-                    <div className="border-t border-border pt-4">
-                      <p className="font-semibold text-foreground">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">{item.role}</p>
-                      <p className="text-sm text-accent-foreground">{item.company}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">想成為我們的夥伴？</h2>
-              <p className="mt-3 text-muted-foreground">
-                無論是學校或企業，我們都歡迎您加入鄉育的行列
-              </p>
-              <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Button asChild className="transition-all hover:ring-2 hover:ring-[#C7FF3A]/40">
-                  <Link href="/involve/corporate">企業合作</Link>
-                </Button>
-                <Button variant="outline" asChild className="transition-colors hover:border-[#C7FF3A] hover:bg-[#EFFFBE]/50">
-                  <Link href="/involve/university">大學合作</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </Section>
+    </>
   )
 }

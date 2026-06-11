@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero C · 平衡混合（暖人本 + 尋路母題）</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  .nav{position:relative;z-index:5;display:flex;align-items:center;gap:26px;padding:22px 40px;max-width:1320px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:var(--fw-black);font-size:18px;color:var(--text)}
+  .mark{width:38px;height:38px;flex:0 0 38px}
+  .nav nav{display:flex;gap:24px;margin-left:18px}
+  .nav nav a{color:var(--text-soft);text-decoration:none;font-weight:var(--fw-med);font-size:15px}
+  .nav nav a:hover{color:var(--brand-600)}
+  .nav .spacer{flex:1}
+  @media(max-width:860px){.nav nav{display:none}}
+
+  .hero{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.04fr .96fr;
+    gap:14px;align-items:stretch;padding:10px 40px 40px;min-height:calc(100vh - 84px)}
+  @media(max-width:920px){.hero{grid-template-columns:1fr;min-height:0}}
+
+  .left{display:flex;flex-direction:column;justify-content:center;padding:20px 36px 20px 6px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:var(--brand-50);
+    color:var(--brand-700);font-weight:var(--fw-bold);font-size:13.5px;padding:7px 15px;border-radius:var(--r-pill);margin-bottom:22px}
+  h1{font-size:clamp(40px,5.2vw,66px);font-weight:var(--fw-black);line-height:1.08;letter-spacing:-.01em;margin:0 0 20px}
+  h1 .hl{color:var(--accent-500)} h1 .hl-g{color:var(--brand-500)}
+  .lead{font-size:clamp(16px,1.5vw,19px);color:var(--text-soft);max-width:38ch;line-height:1.65;margin:0 0 28px}
+  .cta{display:flex;gap:13px;flex-wrap:wrap;margin-bottom:30px}
+  .chips{display:flex;gap:12px;flex-wrap:wrap}
+  .schip{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--r-md);padding:11px 16px;box-shadow:var(--shadow-sm)}
+  .schip .dot{width:10px;height:10px;border-radius:50%}
+  .schip b{font-size:20px;font-weight:var(--fw-black);line-height:1} .schip span{font-size:12.5px;color:var(--text-soft)}
+
+  .right{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--ink-900);min-height:440px}
+  .rphoto{position:absolute;inset:0;background:
+    radial-gradient(120% 80% at 78% 12%, rgba(233,196,46,.5), transparent 50%),
+    radial-gradient(100% 80% at 25% 95%, rgba(111,163,21,.5), transparent 60%),
+    linear-gradient(125deg,#2c4a16,#5e8f17 60%,#8BBC3D)}
+  .rphoto::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(10,22,12,.66),transparent 55%)}
+  .ph-tag{position:absolute;top:16px;left:16px;z-index:4;display:flex;align-items:center;gap:7px;
+    background:rgba(255,255,255,.18);backdrop-filter:blur(4px);color:#fff;font-size:12px;font-weight:var(--fw-med);
+    padding:6px 12px;border-radius:var(--r-pill);border:1px dashed rgba(255,255,255,.5)}
+  .rroute{position:absolute;inset:0;z-index:3;pointer-events:none}
+  .dest{position:absolute;right:18px;top:20px;z-index:4;background:var(--accent-500);color:#fff;
+    font-weight:var(--fw-bold);font-size:13px;padding:8px 14px;border-radius:var(--r-pill);box-shadow:var(--shadow-md)}
+  .stagebar{position:absolute;left:0;right:0;bottom:0;z-index:4;display:flex;gap:0;
+    background:rgba(18,35,26,.55);backdrop-filter:blur(6px)}
+  .stg{flex:1;padding:15px 12px;color:#fff;display:flex;align-items:center;gap:9px;font-weight:var(--fw-bold);font-size:14px}
+  .stg+.stg{border-left:1px solid rgba(255,255,255,.14)}
+  .stg small{display:block;font-weight:var(--fw-reg);font-size:11px;color:rgba(255,255,255,.6)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="11" fill="#fff" stroke="#E7E3D3"/>
+      <path d="M9 27 C16 27 16 14 24 14 S31 21 32 12" stroke="#6FA315" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+      <circle cx="9" cy="27" r="3.4" fill="#F1700A"/><circle cx="31.5" cy="12.5" r="3.6" fill="#E9C42E"/>
+    </svg>
+    鄉育教育基金會
+  </div>
+  <nav><a>關於我們</a><a>尋路計劃</a><a>分眾專區</a><a>影響力</a><a>最新消息</a></nav>
+  <div class="spacer"></div>
+  <a class="btn btn-md btn-brand">立即報名</a>
+</header>
+
+<main class="hero">
+  <div class="left">
+    <span class="eyebrow">🧭 財團法人鄉育教育基金會</span>
+    <h1>撥開職涯的<span class="hl">迷霧</span><br>看見你的<span class="hl-g">專屬藍圖</span></h1>
+    <p class="lead">陪伴每一位青年探索自我、釐清方向、勇敢前行——把迷惘的路，走成屬於自己的旅程。</p>
+    <div class="cta">
+      <a class="btn btn-lg btn-brand">開始尋路</a>
+      <a class="btn btn-lg btn-ghost">了解我們的故事 ↗</a>
+    </div>
+    <div class="chips">
+      <div class="schip"><span class="dot" style="background:var(--brand-500)"></span><div><b>3,000+</b><span>服務青年</span></div></div>
+      <div class="schip"><span class="dot" style="background:var(--gold-500)"></span><div><b>50+</b><span>合作學校</span></div></div>
+      <div class="schip"><span class="dot" style="background:var(--accent-500)"></span><div><b>30+</b><span>尋路計劃</span></div></div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="rphoto"></div>
+    <div class="ph-tag">📷 真實學生攝影 · 客戶提供</div>
+    <div class="dest">🚩 專屬藍圖</div>
+    <svg class="rroute" viewBox="0 0 600 520" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="rgc" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#F1700A"/><stop offset=".55" stop-color="#E9C42E"/><stop offset="1" stop-color="#6FA315"/></linearGradient>
+        <marker id="ahc" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#6FA315"/></marker>
+      </defs>
+      <path d="M70,470 C170,470 180,330 300,320 C420,310 430,150 540,90" fill="none"
+        stroke="url(#rgc)" stroke-width="5.5" stroke-linecap="round" stroke-dasharray="2 15" marker-end="url(#ahc)"/>
+      <circle cx="70" cy="470" r="8" fill="#F1700A" stroke="#fff" stroke-width="2"/>
+      <circle cx="300" cy="320" r="8" fill="#E9C42E" stroke="#fff" stroke-width="2"/>
+      <circle cx="540" cy="90" r="9" fill="#6FA315" stroke="#fff" stroke-width="2.5"/>
+    </svg>
+    <div class="stagebar">
+      <div class="stg"><span class="node"></span><div>探索自我<small>釐清興趣與優勢</small></div></div>
+      <div class="stg"><span class="node y" style="background:var(--gold-500);box-shadow:0 0 0 4px rgba(233,196,46,.22)"></span><div>釐清方向<small>看見職涯選項</small></div></div>
+      <div class="stg"><span class="node g" style="background:var(--brand-500);box-shadow:0 0 0 4px rgba(111,163,21,.22)"></span><div>勇敢前行<small>踏出第一步</small></div></div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

@@ -1,164 +1,102 @@
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
+import type { Metadata } from "next"
 import Link from "next/link"
+import { ArrowRight, MapPin } from "lucide-react"
+import { PageHeader, Section, SectionHeading, findCrumbs } from "@/components/page-shell"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { pageMeta } from "@/lib/seo"
+import { journeyVocab, milestones, partners } from "@/lib/site"
 
-export const metadata = {
-  title: "我們的故事 | 財團法人鄉育教育基金會",
-  description: "了解財團法人鄉育教育基金會（CountryEDU Charity Foundation）的成立背景、起心動念、以及關鍵轉折故事。",
-}
+export const metadata: Metadata = pageMeta({
+  title: "創立故事",
+  description: "從 2021 年偏鄉學習歷程工作坊，到 2026 年大學職涯探索與學術研究合作。",
+  path: "/about/story",
+})
 
-const timeline = [
-  {
-    year: "2019",
-    title: "播下種子",
-    description: "創辦人在大學任教時，發現許多學生對未來感到迷惘，卻缺乏系統化的探索資源。這個觀察成為鄉育誕生的起點。",
-  },
-  {
-    year: "2020",
-    title: "第一屆學員",
-    description: "在資源有限的情況下，我們迎來了第一批 50 位學員。看到他們在課程中的改變，讓我們更確信這條路是對的。",
-  },
-  {
-    year: "2021",
-    title: "企業夥伴加入",
-    description: "第一批企業夥伴加入，提供真實專案讓學生實踐。這不僅豐富了課程內容，也讓企業看見年輕人才的潛力。",
-  },
-  {
-    year: "2022",
-    title: "課程系統化",
-    description: "我們將課程發展為三階段學習旅程，結合 SEL 社會情緒學習與數據驅動成長，打造獨特的鄉育方法論。",
-  },
-  {
-    year: "2023",
-    title: "大學合作擴展",
-    description: "與多所大學建立正式合作，將課程嵌入校內，讓更多學生能夠接觸到職涯探索資源。",
-  },
-  {
-    year: "2024",
-    title: "持續成長",
-    description: "累計服務超過 2500 位學生，與 45 所學校、120 家企業建立合作關係。我們的影響力持續擴大。",
-  },
-]
-
-export default function StoryPage() {
+export default function Page() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navigation />
-      <main className="flex-1">
-        {/* Hero */}
-        <section className="border-b border-border bg-gradient-to-b from-primary/5 to-background py-20 lg:py-28">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-3xl">
-              <Link href="/about" className="mb-4 inline-flex items-center gap-1 text-sm text-primary hover:underline">
-                <ArrowRight className="h-4 w-4 rotate-180" />
-                返回認識鄉育
-              </Link>
-              <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-                我們的故事
-              </h1>
-              <p className="mt-6 text-pretty text-lg leading-relaxed text-muted-foreground">
-                每一個改變的開始，都來自一個簡單的願望：讓年輕人不再為未來感到迷惘。
-              </p>
-            </div>
-          </div>
-        </section>
+    <>
+      <PageHeader
+        eyebrow="關於我們"
+        title="創立故事"
+        lead="從地方教育出發，培養青年探索自己未來的藍圖。"
+        crumbs={findCrumbs("/about/story")}
+      />
 
-        {/* Origin Story */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-3xl">
-              <h2 className="mb-6 text-2xl font-bold tracking-tight text-foreground">起心動念</h2>
-              <div className="space-y-4 text-lg leading-relaxed text-muted-foreground">
-                <p>
-                  「老師，我不知道自己喜歡什麼。」「我覺得選錯科系了，但不知道該怎麼辦。」
-                  「我快畢業了，但對找工作感到很徬徨。」
-                </p>
-                <p>
-                  這些來自學生的聲音，一直縈繞在創辦人的心中。根據調查，有 59% 的大學生覺得選錯科系，
-                  40% 的大四生對找工作感到徬徨。這些數字背後，是無數個在迷霧中摸索的年輕靈魂。
-                </p>
-                <p>
-                  我們開始思考：是否有一種方式，能夠幫助年輕人在進入職場前，
-                  先好好認識自己、探索不同的可能性、並具備做出選擇的能力？
-                </p>
-                <p>
-                  這個思考，成為了鄉育教育基金會的起點。
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+      {/* 創立敘事 */}
+      <Section>
+        <ScrollReveal className="mx-auto max-w-2xl space-y-5 text-pretty text-lg leading-relaxed text-foreground/85">
+          <p>
+            鄉育教育基金會長期關注台灣青年教育與人才發展議題。2021 年起，我們從偏鄉與非都會地區的高中生支持開始，
+            陪伴學生面對升學與職涯的迷惘。
+          </p>
+          <p>
+            2025 年起，服務逐步延伸至大學生職涯探索、跨域能力培養與產學合作。我們相信，教育不只是升學與知識傳遞，
+            更重要的，是幫助青年建立面對未來世界的「選擇」能力。
+          </p>
+        </ScrollReveal>
+      </Section>
 
-        {/* Timeline */}
-        <section className="border-y border-border bg-muted/30 py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-3xl">
-              <h2 className="mb-12 text-center text-2xl font-bold tracking-tight text-foreground">我們走過的路</h2>
-              
-              <div className="relative">
-                {/* Timeline line */}
-                <div className="absolute left-4 top-0 h-full w-0.5 bg-border md:left-1/2 md:-translate-x-1/2" />
+      {/* 大事紀 */}
+      <Section muted>
+        <SectionHeading eyebrow={`${journeyVocab.footprints}・大事紀`} title="一路走來的關鍵里程碑" />
+        <ol className="relative mx-auto mt-12 max-w-3xl space-y-8 pl-8">
+          <span aria-hidden="true" className="absolute left-[7px] top-2 h-[calc(100%-1rem)] w-0.5 bg-border" />
+          {milestones.map((m, i) => (
+            <ScrollReveal as="li" key={m.year} delay={i * 80} className="relative">
+              <span className="absolute -left-[1.55rem] top-1.5 size-4 rounded-full border-2 border-primary bg-background" />
+              <p className="text-xl font-black text-primary">{m.year}</p>
+              <p className="mt-1.5 text-pretty leading-relaxed text-foreground/85">{m.text}</p>
+            </ScrollReveal>
+          ))}
+        </ol>
+      </Section>
 
-                <div className="space-y-12">
-                  {timeline.map((item, index) => (
-                    <div
-                      key={item.year}
-                      className={`relative flex flex-col md:flex-row ${
-                        index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                      }`}
-                    >
-                      {/* Dot */}
-                      <div className="absolute left-4 top-0 z-10 h-3 w-3 -translate-x-1/2 rounded-full border-4 border-background bg-primary md:left-1/2" />
-                      
-                      {/* Content */}
-                      <div className={`ml-12 md:ml-0 md:w-1/2 ${index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
-                        <p className="mb-2 text-sm font-semibold text-primary">{item.year}</p>
-                        <h3 className="mb-2 text-lg font-semibold text-foreground">{item.title}</h3>
-                        <p className="text-muted-foreground">{item.description}</p>
-                      </div>
-                      
-                      <div className="hidden md:block md:w-1/2" />
-                    </div>
-                  ))}
-                </div>
-              </div>
+      {/* 合作版圖 */}
+      <Section>
+        <SectionHeading
+          eyebrow="合作版圖"
+          title="從地方扎根，遍及全台"
+          description="截至目前，鄉育已與 12 縣市、35+ 所大專院校與高中職合作。"
+        />
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
+          <ScrollReveal className="rounded-3xl border border-border bg-card p-7">
+            <p className="font-semibold text-foreground">服務縣市（12）</p>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {partners.counties.map((c) => (
+                <li
+                  key={c}
+                  className="inline-flex items-center gap-1 rounded-full bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground"
+                >
+                  <MapPin className="size-3.5 text-primary" aria-hidden="true" />
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </ScrollReveal>
+          <ScrollReveal delay={120} className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-3xl border border-border bg-secondary/50 p-7 text-center">
+              <p className="text-5xl font-black text-primary">12</p>
+              <p className="mt-2 text-sm font-medium text-muted-foreground">合作縣市</p>
             </div>
-          </div>
-        </section>
+            <div className="rounded-3xl border border-border bg-secondary/50 p-7 text-center">
+              <p className="text-5xl font-black text-primary">35+</p>
+              <p className="mt-2 text-sm font-medium text-muted-foreground">大專院校 & 高中職</p>
+            </div>
+            <div className="rounded-3xl border border-border bg-card p-7 sm:col-span-2">
+              <p className="text-sm font-semibold text-foreground">代表性合作大學</p>
+              <p className="mt-2 text-pretty text-sm text-muted-foreground">{partners.schools.join("、")}</p>
+            </div>
+          </ScrollReveal>
+        </div>
 
-        {/* Looking Forward */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-3xl">
-              <h2 className="mb-6 text-2xl font-bold tracking-tight text-foreground">展望未來</h2>
-              <div className="space-y-4 text-lg leading-relaxed text-muted-foreground">
-                <p>
-                  鄉育的故事還在繼續。我們相信，每一位年輕人都有找到方向的潛力，
-                  只是需要適當的引導與支持。
-                </p>
-                <p>
-                  未來，我們將持續優化課程內容、擴大合作網絡、
-                  並運用科技讓更多學生能夠接觸到優質的職涯探索資源。
-                </p>
-                <p>
-                  如果你也認同我們的理念，歡迎加入我們，一起為青年的未來創造更多可能。
-                </p>
-              </div>
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                <Button asChild className="transition-all hover:ring-2 hover:ring-[#C7FF3A]/40">
-                  <Link href="/involve/donate">支持我們</Link>
-                </Button>
-                <Button variant="outline" asChild className="transition-colors hover:border-[#C7FF3A] hover:bg-[#EFFFBE]/50">
-                  <Link href="/about/mission">了解使命與願景</Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+        <ScrollReveal className="mt-10 text-center">
+          <Button size="lg" variant="outline" className="h-12 px-7" render={<Link href="/impact/partners" />}>
+            看完整合作夥伴
+            <ArrowRight className="size-5" aria-hidden="true" />
+          </Button>
+        </ScrollReveal>
+      </Section>
+    </>
   )
 }

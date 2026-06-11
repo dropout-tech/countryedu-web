@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hero B · 大膽尋路圖像（圖2 路線）</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body{background:var(--ink-900)}
+  .nav{position:relative;z-index:5;display:flex;align-items:center;gap:26px;padding:22px 40px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:var(--fw-black);font-size:18px;color:#fff}
+  .mark{width:38px;height:38px;flex:0 0 38px}
+  .nav nav{display:flex;gap:24px;margin-left:18px}
+  .nav nav a{color:rgba(255,255,255,.78);text-decoration:none;font-weight:var(--fw-med);font-size:15px}
+  .nav nav a:hover{color:#fff}
+  .nav .spacer{flex:1}
+  @media(max-width:860px){.nav nav{display:none}}
+
+  .hero{position:relative;min-height:calc(100vh - 82px);overflow:hidden;display:flex;align-items:center}
+  .hero::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(60% 50% at 12% 22%, rgba(241,112,10,.20), transparent 60%),
+    radial-gradient(55% 60% at 88% 85%, rgba(111,163,21,.22), transparent 60%)}
+  .grid-bg{position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:46px 46px}
+
+  .route{position:absolute;inset:0;z-index:1;pointer-events:none}
+
+  .copy{position:relative;z-index:3;max-width:1180px;margin:0 auto;width:100%;padding:0 40px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold-500);font-weight:var(--fw-bold);
+    font-size:14px;letter-spacing:.04em;margin-bottom:22px}
+  h1{color:#fff;font-size:clamp(46px,8vw,92px);font-weight:var(--fw-black);line-height:1.02;
+    letter-spacing:.01em;margin:0 0 26px}
+  h1 .hl{color:var(--accent-500)}
+  .steps{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:0 0 34px}
+  .step{display:flex;align-items:center;gap:10px;color:#fff;font-weight:var(--fw-bold);font-size:clamp(16px,2.1vw,21px)}
+  .step .node{flex:0 0 auto}
+  .step .node.g{background:var(--brand-500);box-shadow:0 0 0 4px rgba(111,163,21,.22)}
+  .step .node.y{background:var(--gold-500);box-shadow:0 0 0 4px rgba(233,196,46,.22)}
+  .arrow{color:var(--accent-400);font-size:22px}
+  .cta{display:flex;gap:14px;flex-wrap:wrap}
+
+  /* 右側路標 */
+  .signpost{position:absolute;right:7%;top:50%;transform:translateY(-50%);z-index:2;width:min(30vw,330px)}
+  @media(max-width:980px){.signpost{display:none}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 40 40" fill="none">
+      <rect width="40" height="40" rx="11" fill="#fff"/>
+      <path d="M9 27 C16 27 16 14 24 14 S31 21 32 12" stroke="#6FA315" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+      <circle cx="9" cy="27" r="3.4" fill="#F1700A"/><circle cx="31.5" cy="12.5" r="3.6" fill="#E9C42E"/>
+    </svg>
+    鄉育教育基金會
+  </div>
+  <nav><a>關於我們</a><a>尋路計劃</a><a>分眾專區</a><a>影響力</a><a>最新消息</a></nav>
+  <div class="spacer"></div>
+  <a class="btn btn-md btn-accent">立即加入 ↗</a>
+</header>
+
+<main class="hero">
+  <div class="grid-bg"></div>
+
+  <!-- 貫穿的尋路路徑 + 箭頭 -->
+  <svg class="route" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="rg" x1="0" x2="1">
+        <stop offset="0" stop-color="#F1700A"/><stop offset=".55" stop-color="#E9C42E"/><stop offset="1" stop-color="#6FA315"/>
+      </linearGradient>
+      <marker id="ah" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+        <path d="M0,0 L9,4.5 L0,9 Z" fill="#6FA315"/>
+      </marker>
+    </defs>
+    <path d="M-30,690 C300,690 340,470 640,460 C940,450 980,250 1180,250 C1330,250 1380,210 1500,150"
+      fill="none" stroke="url(#rg)" stroke-width="6" stroke-linecap="round"
+      stroke-dasharray="2 17" marker-end="url(#ah)"/>
+    <circle cx="180" cy="640" r="9" fill="#F1700A"/>
+    <circle cx="640" cy="460" r="9" fill="#E9C42E"/>
+    <circle cx="1180" cy="250" r="11" fill="#6FA315" stroke="#fff" stroke-width="3"/>
+  </svg>
+
+  <!-- 右側路標牌 -->
+  <svg class="signpost" viewBox="0 0 300 320" fill="none">
+    <line x1="150" y1="40" x2="150" y2="300" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".85"/>
+    <g>
+      <path d="M40 70 H210 L240 95 L210 120 H40 Z" fill="#F1700A"/>
+      <text x="58" y="102" fill="#fff" font-size="26" font-weight="800" font-family="PingFang TC,Noto Sans TC,sans-serif">探索自我</text>
+    </g>
+    <g>
+      <path d="M90 150 H260 L260 200 H90 L60 175 Z" fill="#E9C42E"/>
+      <text x="108" y="182" fill="#12231A" font-size="26" font-weight="800" font-family="PingFang TC,Noto Sans TC,sans-serif">釐清方向</text>
+    </g>
+    <g>
+      <path d="M40 230 H210 L240 255 L210 280 H40 Z" fill="#6FA315"/>
+      <text x="58" y="262" fill="#fff" font-size="26" font-weight="800" font-family="PingFang TC,Noto Sans TC,sans-serif">勇敢前行</text>
+    </g>
+  </svg>
+
+  <div class="copy">
+    <span class="eyebrow">🧭 鄉育 · 青年職涯探索計劃</span>
+    <h1>撥開<span class="hl">職涯迷霧</span><br>尋<span class="hl">路</span>計劃</h1>
+    <div class="steps">
+      <span class="step"><span class="node"></span>探索自我</span>
+      <span class="arrow">→</span>
+      <span class="step"><span class="node y"></span>釐清方向</span>
+      <span class="arrow">→</span>
+      <span class="step"><span class="node g"></span>勇敢前行</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-lg btn-accent">立即加入尋路</a>
+      <a class="btn btn-lg btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.4)">計劃介紹</a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

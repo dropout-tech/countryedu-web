@@ -1,94 +1,154 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 @custom-variant dark (&:is(.dark *));
 
+@theme inline {
+  --font-heading: var(--font-noto-sans-tc), var(--font-sans);
+  --font-sans: var(--font-noto-sans-tc), var(--font-geist-sans), 'Geist Fallback';
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-cream: var(--cream);
+  --color-honey: var(--honey);
+  --color-gold-mist: var(--gold-mist);
+  --color-sprout: var(--sprout);
+  --color-path-orange: var(--path-orange);
+  --color-sun-gold: var(--sun-gold);
+  --color-leaf-bright: var(--leaf-bright);
+  --color-neon-leaf: var(--neon-leaf);
+  --color-neon-sun: var(--neon-sun);
+  --color-deep-green: var(--deep-green);
+  --color-pine-green: var(--pine-green);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
 :root {
-  /* 
-   * 鄉育教育基金會 CIS-Aligned Brand Palette
-   * =========================================
-   * Core Brand Colors:
-   * - Primary Green: Growth, rural landscape, hope, vitality
-   * - Warm Yellow: Warmth, light, companionship, learning energy  
-   * - Earthy Brown: Land, grounding, simplicity, trust, rootedness
-   */
-  
-  /* Background: Warm white / mist white with subtle warmth */
-  --background: oklch(0.985 0.008 85);
-  --foreground: oklch(0.25 0.02 55);
-  
-  /* Card: Clean warm white */
-  --card: oklch(0.995 0.005 85);
-  --card-foreground: oklch(0.25 0.02 55);
-  
-  /* Popover */
-  --popover: oklch(0.995 0.005 85);
-  --popover-foreground: oklch(0.25 0.02 55);
-  
-  /* Primary: Soft natural green - refined, not neon */
-  --primary: oklch(0.52 0.12 145);
-  --primary-foreground: oklch(0.98 0.005 85);
-  
-  /* Secondary: Light beige / pale cream */
-  --secondary: oklch(0.95 0.015 85);
-  --secondary-foreground: oklch(0.35 0.025 55);
-  
-  /* Muted: Warm light gray with slight beige undertone */
-  --muted: oklch(0.93 0.012 85);
-  --muted-foreground: oklch(0.48 0.02 55);
-  
-  /* Accent: Muted sunlight yellow - warm, not bright orange */
-  --accent: oklch(0.82 0.11 85);
-  --accent-foreground: oklch(0.3 0.04 55);
-  
-  /* Destructive */
-  --destructive: oklch(0.55 0.2 25);
-  --destructive-foreground: oklch(0.98 0.005 85);
-  
-  /* Border: Warm subtle border */
-  --border: oklch(0.88 0.015 85);
-  --input: oklch(0.92 0.012 85);
-  --ring: oklch(0.52 0.12 145);
-  
-  /* Charts: Brand-aligned palette */
-  --chart-1: oklch(0.52 0.12 145);
-  --chart-2: oklch(0.82 0.11 85);
-  --chart-3: oklch(0.45 0.08 55);
-  --chart-4: oklch(0.62 0.1 145);
-  --chart-5: oklch(0.72 0.09 85);
-  
-  --radius: 0.75rem;
-  
-  /* Sidebar */
-  --sidebar: oklch(0.97 0.01 85);
-  --sidebar-foreground: oklch(0.25 0.02 55);
-  --sidebar-primary: oklch(0.52 0.12 145);
-  --sidebar-primary-foreground: oklch(0.98 0.005 85);
-  --sidebar-accent: oklch(0.93 0.012 85);
-  --sidebar-accent-foreground: oklch(0.35 0.025 55);
-  --sidebar-border: oklch(0.88 0.015 85);
-  --sidebar-ring: oklch(0.52 0.12 145);
-  
-  /* Brand-specific semantic colors */
-  --brand-green: oklch(0.52 0.12 145);
-  --brand-green-light: oklch(0.92 0.04 145);
-  --brand-green-dark: oklch(0.4 0.1 145);
-  --brand-yellow: oklch(0.82 0.11 85);
-  --brand-yellow-light: oklch(0.95 0.05 85);
-  --brand-brown: oklch(0.45 0.08 55);
-  --brand-brown-light: oklch(0.75 0.05 55);
-  --brand-cream: oklch(0.97 0.015 85);
-  --brand-charcoal: oklch(0.3 0.02 55);
+  /* 鄉育教育基金會品牌色票 v3（2026-06-11 亮度／飽和度上調提案；正式色號仍待甲方簽認，
+     v2 原值：primary #4a9023、accent #e8941a、sun-gold #f7b52c、secondary #ebf3e6、border #dbe7d2）
+
+     色彩語意（全站一致）：
+     - 鄉育綠（primary）＝路徑與主行動：路線、主按鈕、eyebrow
+     - 路徑橘（accent / path-orange）＝節點與強調：waypoint、引號、第幕標籤
+     - 暖陽黃（sun-gold）＝關鍵字底線與點綴
+     - 深林綠（deep-green）＝沉穩大底色（隧道區塊）；長文一律 foreground */
+  --background: #ffffff; /* 留白 白 純 WHITE --bg-page */
+  --foreground: #25331c;
+  --card: #ffffff;
+  --card-foreground: #25331c;
+  --popover: #ffffff;
+  --popover-foreground: #25331c;
+  --primary: #4f9f1d; /* 鄉育綠 BRAND GREEN */
+  --primary-foreground: #ffffff;
+  --secondary: #e9f4df; /* 晨霧綠 MIST PAPER --bg-paper */
+  --secondary-foreground: #2e4a1f;
+  --muted: #e9f4df;
+  --muted-foreground: #5d6c52;
+  --accent: #f28c0a; /* 路徑橘 PATH ORANGE（Sales Kit 260525 反推＋飽和度上調） */
+  --accent-foreground: #ffffff;
+  --cream: #f5f0e5; /* 米白 CREAM（Sales Kit 區塊底） */
+  --honey: #fbefd9; /* 蜜糖米 HONEY（v3 鮮豔版 Hero／分眾暖底） */
+  --gold-mist: #ffe9a8; /* 暖陽黃淡底 GOLD MIST（v3.2 彩度上調） */
+  --sprout: #ddf2c4; /* 嫩芽綠 SPROUT（v3.2：版本 A tint 帶，彩度高於晨霧綠） */
+  --path-orange: #f28c0a; /* 路徑橘 PATH ORANGE */
+  --sun-gold: #ffbb1f; /* 暖陽黃 SUN GOLD */
+  --deep-green: #3d5527; /* 深林綠 DEEP GREEN */
+  --pine-green: #4a7c59; /* 鄉育綠（沉） PINE GREEN */
+  --leaf-bright: #8ec457; /* 亮葉綠（Logo 原色）：明亮框線與大型圖形 */
+  --neon-leaf: #cdf73f; /* 螢光嫩芽 NEON LEAF：高亮點綴（僅圖形，禁用於文字） */
+  --neon-sun: #ffab2e; /* 螢光暖橘 NEON SUN：標題螢光筆底線（僅圖形，禁用於文字） */
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #d6e8c5;
+  --input: #d6e8c5;
+  --ring: #4f9f1d;
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+/* 鄉育品牌色票 v4「向陽而生」——以 Logo 實際取色為錨：
+   嫩葉綠 #8ec457（人形與葉弧）、麥穗黃 #f5b62d（太陽人形）、大地棕 #987459（字標）。
+   語意：綠＝青年與路（主行動）；黃＝陽光與嚮導（強調/高亮）；棕＝土地與鄉（次要文字/暖底）。
+   目前由 /home-b（版本 B）試穿：ThemeClass 於掛載時將本 class 加在 <html>，離開即還原；
+   Logo 原色（500）只當圖形色，文字與按鈕用同族 700 以顧及對比。甲方簽認後可整段搬進 :root。 */
+.theme-v4 {
+  --primary: #4e8718; /* 嫩葉綠 700：按鈕、連結、eyebrow（白底 4.4:1） */
+  --foreground: #2b3a17; /* 深葉 900 */
+  --card-foreground: #2b3a17;
+  --popover-foreground: #2b3a17;
+  --secondary: #f1f8e4; /* 淡芽 100 */
+  --secondary-foreground: #3a5414;
+  --muted: #f1f8e4;
+  --muted-foreground: #6f5138; /* 深土 700：次要文字改走暖棕（7.2:1） */
+  --accent: #bd7506; /* 琥珀 700：文字級強調 */
+  --sun-gold: #f5b62d; /* 麥穗黃 500（Logo 原色）：底線、節點、圖形級高亮 */
+  --path-orange: #bd7506;
+  --cream: #f4ede5; /* 陶土米 100（自大地棕展開） */
+  --honey: #fdf3d8; /* 麥田米 100 */
+  --gold-mist: #fbd980; /* 麥穗 300 */
+  --deep-green: #344f15; /* 深田綠（hue 對齊嫩葉族） */
+  --pine-green: #987459; /* 大地棕 500（Logo 字標原色） */
+  --leaf-bright: #7ed133; /* 亮葉綠（v4 punch 版）：明亮框線與大型圖形 */
+  --border: #dbe9c6;
+  --input: #dbe9c6;
+  --ring: #4e8718;
 }
 
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.145 0 0);
+  --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.145 0 0);
+  --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
@@ -96,76 +156,23 @@
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.269 0 0);
-  --input: oklch(0.269 0 0);
-  --ring: oklch(0.439 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(0.269 0 0);
-  --sidebar-ring: oklch(0.439 0 0);
-}
-
-@theme inline {
-  --font-sans: var(--font-noto-sans-tc), var(--font-inter), system-ui, sans-serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  
-  /* Brand colors for utility classes */
-  --color-brand-green: var(--brand-green);
-  --color-brand-green-light: var(--brand-green-light);
-  --color-brand-green-dark: var(--brand-green-dark);
-  --color-brand-yellow: var(--brand-yellow);
-  --color-brand-yellow-light: var(--brand-yellow-light);
-  --color-brand-brown: var(--brand-brown);
-  --color-brand-brown-light: var(--brand-brown-light);
-  --color-brand-cream: var(--brand-cream);
-  --color-brand-charcoal: var(--brand-charcoal);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -174,5 +181,101 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pop-node {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Scroll Reveal —— 由 <ScrollReveal> 元件以 IntersectionObserver 觸發 */
+@layer utilities {
+  /* 版本 B 明亮語彙：白卡外的螢光綠光暈（2026-06-11 使用者指定） */
+  .glow-neon {
+    box-shadow:
+      0 0 0 1.5px color-mix(in oklab, var(--neon-leaf) 70%, transparent),
+      0 0 22px 5px color-mix(in oklab, var(--neon-leaf) 40%, transparent);
+  }
+  /* 標題螢光筆底線：文字下半鋪一條螢光色帶（綠／橘交替使用） */
+  .hl-leaf {
+    background-image: linear-gradient(transparent 62%, var(--neon-leaf) 62%, var(--neon-leaf) 95%, transparent 95%);
+  }
+  .hl-sun {
+    background-image: linear-gradient(transparent 62%, var(--neon-sun) 62%, var(--neon-sun) 95%, transparent 95%);
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 自訂游標啟用時隱藏原生游標（僅桌機 fine pointer，由 <Cursor> 動態加上） */
+.cursor-none,
+.cursor-none * {
+  cursor: none !important;
+}
+
+.cursor-ring {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid color-mix(in oklch, var(--primary) 50%, transparent);
+}
+.cursor-ring.cursor-ring--active {
+  width: 3.25rem;
+  height: 3.25rem;
+  background-color: color-mix(in oklch, var(--primary) 12%, transparent);
+  border-color: color-mix(in oklch, var(--primary) 70%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-draw,
+  .motion-node,
+  .motion-float {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

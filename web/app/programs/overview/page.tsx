@@ -1,155 +1,179 @@
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
+import type { Metadata } from "next"
 import Link from "next/link"
+import { ArrowRight, FileText, MoveRight, Sparkles } from "lucide-react"
+import { PageHeader, Section, SectionHeading, findCrumbs } from "@/components/page-shell"
+import { CompanionCtas } from "@/components/programs/companion-ctas"
+import { OverviewStages } from "@/components/programs/overview-stages"
+import { actIcons } from "@/components/journey-icons"
+import { WaveSeam } from "@/components/section-decor"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Calendar, Users, Clock, MapPin, CheckCircle2 } from "lucide-react"
+import { pageMeta } from "@/lib/seo"
+import { brand, digitalPortfolio, generationIssue, pathfinderActs, spiralPhases, storyActs } from "@/lib/site"
 
-export const metadata = {
-  title: "專案一覽 | 財團法人鄉育教育基金會",
-  description: "了解財團法人鄉育教育基金會大學專案的服務對象、課程期間、形式、以及年度架構。",
+export const metadata: Metadata = pageMeta({
+  title: "計畫總覽｜尋路計畫",
+  description: "尋路計畫 Pathfinder Program——學生是找路的人，鄉育是嚮導。五段路程：迷霧、地圖、走法、足跡、同行。",
+  path: "/programs/overview",
+})
+
+/**
+ * 計畫總覽：五段敘事弧（lib/site.ts pathfinderActs）。
+ * ①迷霧（為什麼）→②地圖（宏觀三階段）→③走法（四能力循環）→④足跡（數位履歷＋故事）→⑤同行（三分流）。
+ * 詞彙紀律：②談「階段」（旅程層）、③只談「循環／象限」（方法層）。
+ */
+const [actMist, actMap, actWalk, actFootprints, actCompany] = pathfinderActs
+
+/** 段落 eyebrow：路途圖標＋編號＋路途語彙（圖標映射見 components/journey-icons.tsx） */
+function ActEyebrow({ act }: { act: (typeof pathfinderActs)[number] }) {
+  const Icon = actIcons[act.key]
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      {Icon && <Icon className="size-4" aria-hidden="true" />}
+      {act.no}・{act.waypoint}
+    </span>
+  )
 }
 
-const targetAudience = [
-  { group: "大學生", description: "大一至大四，不限科系，對職涯探索有興趣者" },
-  { group: "研究生", description: "碩博士生，希望在學術與產業間找到方向者" },
-  { group: "社會新鮮人", description: "畢業 1-2 年內，正在摸索職涯方向者" },
-]
-
-const programDetails = [
-  { icon: Calendar, label: "課程期間", value: "12 個月（每年 9 月至隔年 8 月）" },
-  { icon: Clock, label: "時間安排", value: "每週 3-4 小時，線上線下混合" },
-  { icon: Users, label: "班級規模", value: "每班 20-30 人" },
-  { icon: MapPin, label: "實體活動地點", value: "台北、台中、高雄" },
-]
-
-const annualSchedule = [
-  { month: "9-11月", phase: "階段一", content: "Know Yourself - 個人核心探索", color: "bg-primary" },
-  { month: "12-2月", phase: "階段二", content: "Make it Real - 個人實踐能力養成", color: "bg-accent" },
-  { month: "3-8月", phase: "階段三", content: "Become Your Future - 企業專案實作", color: "bg-chart-4" },
-]
-
-export default function ProgramsOverviewPage() {
+export default function Page() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Navigation />
-      <main className="flex-1">
-        {/* Hero */}
-        <section className="border-b border-border bg-gradient-to-b from-primary/5 to-background py-20 lg:py-28">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-3xl">
-              <Link href="/programs" className="mb-4 inline-flex items-center gap-1 text-sm text-primary hover:underline">
-                <ArrowRight className="h-4 w-4 rotate-180" />
-                返回大學專案
-              </Link>
-              <h1 className="text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-                專案一覽
-              </h1>
-              <p className="mt-6 text-pretty text-lg leading-relaxed text-muted-foreground">
-                完整了解鄉育大學專案的架構、對象、與時程安排。
-              </p>
-            </div>
-          </div>
-        </section>
+    <>
+      <PageHeader
+        eyebrow={`${brand.programName} ${brand.programNameEn}`}
+        title="一條把迷惘走成方向的路"
+        lead="學生是找路的人，鄉育是嚮導。從認識自己啟程，在真實世界實踐，帶著有證據的成長走向未來。"
+        crumbs={findCrumbs("/programs/overview")}
+      />
 
-        {/* Target Audience */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-4xl">
-              <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">服務對象</h2>
-              <div className="grid gap-4 md:grid-cols-3">
-                {targetAudience.map((item) => (
-                  <div key={item.group} className="relative rounded-xl border border-border bg-card p-6 transition-colors hover:border-[#C7FF3A]/30">
-                    <span className="pointer-events-none absolute left-4 top-4 h-1.5 w-10 rounded-full bg-[#C7FF3A]" aria-hidden />
-                    <h3 className="mb-2 text-lg font-semibold text-foreground">{item.group}</h3>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                  </div>
-                ))}
+      {/* ① 迷霧：為什麼需要尋路（簡短橋接，完整論述在 about/mission） */}
+      <Section>
+        <SectionHeading eyebrow={<ActEyebrow act={actMist} />} title={actMist.title} description={actMist.lead} />
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1fr]">
+          <ScrollReveal className="grid gap-4 sm:grid-cols-2">
+            {generationIssue.data.map((d) => (
+              <div key={d.label} className="rounded-3xl border border-border bg-card p-6">
+                <p className="text-4xl font-black text-primary">{d.value}</p>
+                <p className="mt-2 font-semibold text-foreground">{d.label}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{d.source}</p>
               </div>
-            </div>
-          </div>
-        </section>
+            ))}
+          </ScrollReveal>
+          <ScrollReveal delay={120} className="flex flex-col justify-center gap-4 rounded-3xl bg-secondary/60 p-7">
+            <p className="text-pretty text-lg font-medium leading-relaxed text-foreground">
+              {generationIssue.conclusion}
+            </p>
+            <Link
+              href={actMist.href}
+              className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
+            >
+              了解我們看見的世代課題
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </ScrollReveal>
+        </div>
+      </Section>
 
-        {/* Program Details */}
-        <section className="border-y border-border bg-muted/30 py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-4xl">
-              <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">課程詳情</h2>
-              <div className="grid gap-6 sm:grid-cols-2">
-                {programDetails.map((item) => (
-                  <div key={item.label} className="relative flex items-start gap-4 rounded-xl border border-border bg-card p-6 transition-colors hover:border-[#C7FF3A]/30">
-                    <span className="pointer-events-none absolute left-4 top-4 h-1.5 w-10 rounded-full bg-[#C7FF3A]" aria-hidden />
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                      <item.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">{item.label}</p>
-                      <p className="mt-1 font-semibold text-foreground">{item.value}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+      <WaveSeam top="white" muted={50} />
 
-        {/* Annual Schedule */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-4xl">
-              <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">年度架構</h2>
-              
-              <div className="space-y-4">
-                {annualSchedule.map((item) => (
-                  <div key={item.month} className="flex items-stretch gap-4">
-                    <div className="flex w-24 shrink-0 items-center justify-center rounded-lg bg-muted px-4 py-3">
-                      <span className="text-sm font-medium text-foreground">{item.month}</span>
-                    </div>
-                    <div className={`flex-1 rounded-lg ${item.color} p-4`}>
-                      <p className="text-sm font-medium text-primary-foreground/80">{item.phase}</p>
-                      <p className="font-semibold text-primary-foreground">{item.content}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+      {/* ② 地圖：宏觀三階段（旅程層，保留「階段」一詞） */}
+      <Section muted>
+        <SectionHeading eyebrow={<ActEyebrow act={actMap} />} title={actMap.title} description={actMap.lead} />
+        <OverviewStages />
+      </Section>
 
-        {/* What You Get */}
-        <section className="border-t border-border bg-muted/30 py-20">
-          <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-4xl">
-              <h2 className="mb-8 text-2xl font-bold tracking-tight text-foreground">你將獲得</h2>
-              
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[
-                  "系統化的自我探索工具與測評",
-                  "業界導師一對一諮詢與回饋",
-                  "真實企業專案實作經驗",
-                  "個人職涯學習歷程檔案",
-                  "鄉育結業證書",
-                  "校友社群與持續支持",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-3 rounded-lg border border-border bg-card p-4">
-                    <CheckCircle2 className="h-5 w-5 shrink-0 text-primary" />
-                    <span className="text-foreground">{item}</span>
-                  </div>
-                ))}
-              </div>
+      <WaveSeam top="muted" muted={50} shape="b" />
 
-              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <Button asChild className="transition-all hover:ring-2 hover:ring-[#C7FF3A]/40">
-                  <Link href="/programs/apply">立即報名</Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link href="/programs/journey">了解學習旅程</Link>
-                </Button>
+      {/* ③ 走法：四能力螺旋循環（方法層，只談循環／象限） */}
+      <Section>
+        <SectionHeading eyebrow={<ActEyebrow act={actWalk} />} title={actWalk.title} description={actWalk.lead} />
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {spiralPhases.map((p, i) => (
+            <ScrollReveal key={p.key} delay={i * 100} className="h-full">
+              <div
+                className="flex h-full flex-col gap-2 rounded-3xl border border-border bg-card p-6"
+                style={{ borderTopColor: p.hue, borderTopWidth: 4 }}
+              >
+                <span
+                  aria-hidden="true"
+                  className="inline-flex size-3.5 rounded-full"
+                  style={{ backgroundColor: p.hue }}
+                />
+                <p className="font-bold text-foreground">
+                  {p.title}
+                  <span className="ml-2 text-sm font-medium text-muted-foreground">{p.label}</span>
+                </p>
+                <p className="text-pretty text-sm leading-relaxed text-muted-foreground">{p.text}</p>
               </div>
+            </ScrollReveal>
+          ))}
+        </div>
+        <ScrollReveal className="mt-10 text-center">
+          <Button size="lg" className="h-12 px-7" render={<Link href={actWalk.href} />}>
+            看 16 週怎麼走
+            <ArrowRight className="size-5" aria-hidden="true" />
+          </Button>
+        </ScrollReveal>
+      </Section>
+
+      <WaveSeam top="white" muted={50} shape="b" flip />
+
+      {/* ④ 足跡：動態成長數位履歷＋四幕故事預告 */}
+      <Section muted>
+        <SectionHeading
+          eyebrow={<ActEyebrow act={actFootprints} />}
+          title={actFootprints.title}
+          description={actFootprints.lead}
+        />
+        <div className="mt-12 grid gap-6 lg:grid-cols-[auto_1fr] lg:items-center">
+          <ScrollReveal className="flex items-center justify-center gap-4">
+            <div className="flex w-28 flex-col items-center gap-2 rounded-2xl border border-dashed border-border bg-card p-5 text-center">
+              <FileText className="size-8 text-muted-foreground" aria-hidden="true" />
+              <span className="text-xs font-medium text-muted-foreground">傳統靜態紙本履歷</span>
             </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+            <MoveRight className="size-7 shrink-0 text-primary" aria-hidden="true" />
+            <div className="flex w-28 flex-col items-center gap-2 rounded-2xl border-2 border-primary bg-card p-5 text-center">
+              <Sparkles className="size-8 text-primary" aria-hidden="true" />
+              <span className="text-xs font-bold text-foreground">動態成長數位履歷</span>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={120} className="grid gap-3 sm:grid-cols-2">
+            {digitalPortfolio.map((d) => (
+              <div key={d.title} className="rounded-2xl border border-border bg-card px-5 py-4">
+                <p className="text-sm font-semibold text-foreground">{d.title}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{d.meta}</p>
+              </div>
+            ))}
+          </ScrollReveal>
+        </div>
+
+        {/* 四幕故事預告：一句話＋導流 */}
+        <ScrollReveal className="mt-10 flex flex-col items-center gap-3 rounded-3xl border border-border bg-card p-7 text-center sm:flex-row sm:justify-between sm:text-left">
+          <p className="text-pretty font-medium text-foreground">
+            「{storyActs[3].a}」——每一段足跡，都是一個四幕的成長故事。
+          </p>
+          <Link
+            href="/impact/learning-story"
+            className="inline-flex shrink-0 items-center gap-1 font-semibold text-primary hover:underline"
+          >
+            走進完整故事
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </ScrollReveal>
+      </Section>
+
+      <WaveSeam top="muted" muted={50} flip />
+
+      {/* ⑤ 同行：學生／大學／企業三分流 */}
+      <Section>
+        <SectionHeading
+          align="center"
+          eyebrow={<ActEyebrow act={actCompany} />}
+          title={actCompany.title}
+          description={actCompany.lead}
+        />
+        <CompanionCtas />
+      </Section>
+    </>
   )
 }
