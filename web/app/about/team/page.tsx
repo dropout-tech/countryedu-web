@@ -54,13 +54,22 @@ export default function Page() {
           {team.members.map((m, i) => (
             <ScrollReveal key={m.name} delay={i * 100} className="h-full">
               <div className="flex h-full flex-col items-start rounded-3xl border border-border bg-card p-7">
-                {/* 照片素材待提供，先以姓名字首圓示意 */}
-                <span
-                  aria-hidden="true"
-                  className="inline-flex size-16 items-center justify-center rounded-full bg-primary/12 text-2xl font-black text-primary"
-                >
-                  {m.name.charAt(0)}
-                </span>
+                {/* 照片素材待提供，先以示意大頭貼／姓名字首圓示意 */}
+                {m.avatar ? (
+                  <img
+                    src={m.avatar}
+                    alt=""
+                    aria-hidden="true"
+                    className="size-16 rounded-full bg-primary/12 object-cover"
+                  />
+                ) : (
+                  <span
+                    aria-hidden="true"
+                    className="inline-flex size-16 items-center justify-center rounded-full bg-primary/12 text-2xl font-black text-primary"
+                  >
+                    {m.name.charAt(0)}
+                  </span>
+                )}
                 <h3 className="mt-4 text-xl font-bold text-foreground">
                   {m.name}
                   {m.en && <span className="ml-2 text-sm font-medium text-muted-foreground">{m.en}</span>}

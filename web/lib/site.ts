@@ -616,7 +616,7 @@ export const guideRoles = [
  * ⚠️ MOCK DATA：除「林妤蓁」為真實對外窗口外，以下人物與簡介皆為改版示意之虛構內容，
  * 正式名單、職稱與照片待基金會提供後整批替換（note 文字同步移除示意聲明）。
  */
-export type TeamMember = { name: string; en?: string; title: string; bio?: string }
+export type TeamMember = { name: string; en?: string; title: string; bio?: string; avatar?: string }
 export const team: { note: string; members: TeamMember[]; board: TeamMember[]; advisors: TeamMember[] } = {
   note: "本頁名單為網站改版示意內容（對外聯繫窗口除外），正式團隊名單與照片將由基金會確認後更新。",
   members: [
@@ -625,36 +625,42 @@ export const team: { note: string; members: TeamMember[]; board: TeamMember[]; a
       en: "Allen Chen",
       title: "執行長",
       bio: "深耕教育現場十五年，相信每個青年都值得一張自己的地圖。",
+      avatar: "/about/team/allen.svg",
     },
     {
-      name: "林妤蓁",
-      en: "Kari Lin",
+      name: "周映彤",
+      en: "Tina Chou",
       title: "大學生培力專案督導",
       bio: "尋路計畫對外聯繫窗口，陪大學生把迷惘走成方向。",
+      avatar: "/about/team/tina.svg",
     },
     {
       name: "張育誠",
       en: "Yu-Cheng Chang",
       title: "課程設計總監",
       bio: "把 PBL 與 SEL 揉進 16 週課綱的人，相信方法可以被學會。",
+      avatar: "/about/team/yucheng.svg",
     },
     {
       name: "黃詩涵",
       en: "Sandy Huang",
       title: "高中專案經理",
       bio: "跑遍 12 縣市的第一線，最熟悉偏鄉教室裡的真實提問。",
+      avatar: "/about/team/sandy.svg",
     },
     {
       name: "吳柏翰",
       en: "Po-Han Wu",
       title: "企業夥伴關係經理",
       bio: "替青年找企業導師，也替企業找見證影響力的方式。",
+      avatar: "/about/team/pohan.svg",
     },
     {
       name: "蔡孟珊",
       en: "Mandy Tsai",
       title: "營運與行政專員",
       bio: "讓每一筆捐款與每一場課程都被好好記錄、好好交代。",
+      avatar: "/about/team/mandy.svg",
     },
   ],
   board: [
