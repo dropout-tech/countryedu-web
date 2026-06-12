@@ -156,14 +156,6 @@ export default function Page() {
           >
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div className="grid gap-6">
-                {/* 照片併入左欄與數據同排（2026-06-12 甲方回饋：照片與內容並排、不另起整幅） */}
-                <Figure
-                  src="/about/student-laptop-grass.jpg"
-                  alt="一位青年坐在草地上使用筆電，背景有同伴一起學習"
-                  caption="在真實專案裡累積的軟實力，是 AI 時代最難被取代的裝備"
-                  aspect="aspect-[16/10]"
-                  sizes="(max-width: 1024px) 92vw, 480px"
-                />
                 <ScrollReveal className="rounded-3xl border border-border bg-card p-7">
                   <p className="text-5xl font-black text-primary">{futureSkills.disruption.value}</p>
                   <p className="mt-3 text-pretty font-semibold text-foreground">{futureSkills.disruption.label}</p>
