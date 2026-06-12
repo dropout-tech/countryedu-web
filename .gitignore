@@ -16,7 +16,6 @@
 !/design/
 !/README.md
 !/.gitignore
-!/發佈網站.command
 
 # ── 即使在已放行的目錄內，仍一律排除以下 ──
 # 相依套件 / 建置產物
