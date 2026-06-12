@@ -210,34 +210,35 @@ export const spirals = [
  * 待鄉育內部確認後於此處一處替換（會議決議 D5）。
  * 色相暫依甲方示意圖（紫／紅／藍／青），若改用品牌延伸色僅需調整 hue。
  */
+/** hue 取自品牌四色階（design/color-system）：晨光黃＝指引光、暖陽橘＝尋路光、藍圖青＝冷靜驗證、鄉育綠＝長出方案 */
 export const spiralPhases = [
   {
     key: "discover",
     title: "發現問題",
     label: "理解現況",
     text: "蒐集第一手資料，辨識來源、限制與偏誤，把現況看清楚。",
-    hue: "#b87fe0",
+    hue: "#fcd600",
   },
   {
     key: "define",
     title: "定義問題",
     label: "資訊重組",
     text: "把零散混亂的資訊重組分類，從中找出規律，洞察問題關鍵。",
-    hue: "#f25c5c",
+    hue: "#f5921e",
   },
   {
     key: "verify",
     title: "驗證問題",
     label: "實驗設計",
     text: "提出假設與驗證方法，同時衡量風險與限制，確保邏輯站得住。",
-    hue: "#2f9df0",
+    hue: "#36a6ac",
   },
   {
     key: "design",
     title: "設計方案",
     label: "Case Study",
     text: "提出解決或改善方案，並把它說得讓不同對象都聽得懂。",
-    hue: "#35c4b5",
+    hue: "#69a82a",
   },
 ] as const
 
@@ -610,20 +611,65 @@ export const guideRoles = [
   },
 ] as const
 
-/** 團隊成員（about/team）——TODO：完整名單、董事會／顧問群與照片素材待基金會提供 */
+/**
+ * 團隊成員（about/team）
+ * ⚠️ MOCK DATA：除「林妤蓁」為真實對外窗口外，以下人物與簡介皆為改版示意之虛構內容，
+ * 正式名單、職稱與照片待基金會提供後整批替換（note 文字同步移除示意聲明）。
+ */
 export type TeamMember = { name: string; en?: string; title: string; bio?: string }
 export const team: { note: string; members: TeamMember[]; board: TeamMember[]; advisors: TeamMember[] } = {
-  note: "完整團隊名單與照片整理中，先為你介紹對外聯繫窗口。",
+  note: "本頁名單為網站改版示意內容（對外聯繫窗口除外），正式團隊名單與照片將由基金會確認後更新。",
   members: [
+    {
+      name: "陳俊霖",
+      en: "Allen Chen",
+      title: "執行長",
+      bio: "深耕教育現場十五年，相信每個青年都值得一張自己的地圖。",
+    },
     {
       name: "林妤蓁",
       en: "Kari Lin",
       title: "大學生培力專案督導",
-      bio: "尋路計畫對外聯繫窗口。",
+      bio: "尋路計畫對外聯繫窗口，陪大學生把迷惘走成方向。",
+    },
+    {
+      name: "張育誠",
+      en: "Yu-Cheng Chang",
+      title: "課程設計總監",
+      bio: "把 PBL 與 SEL 揉進 16 週課綱的人，相信方法可以被學會。",
+    },
+    {
+      name: "黃詩涵",
+      en: "Sandy Huang",
+      title: "高中專案經理",
+      bio: "跑遍 12 縣市的第一線，最熟悉偏鄉教室裡的真實提問。",
+    },
+    {
+      name: "吳柏翰",
+      en: "Po-Han Wu",
+      title: "企業夥伴關係經理",
+      bio: "替青年找企業導師，也替企業找見證影響力的方式。",
+    },
+    {
+      name: "蔡孟珊",
+      en: "Mandy Tsai",
+      title: "營運與行政專員",
+      bio: "讓每一筆捐款與每一場課程都被好好記錄、好好交代。",
     },
   ],
-  board: [],
-  advisors: [],
+  board: [
+    { name: "王國楨", title: "董事長｜退休高中校長" },
+    { name: "李振邦", title: "董事｜科技業創辦人" },
+    { name: "周淑芬", title: "董事｜執業會計師" },
+    { name: "許正南", title: "董事｜教育學系教授" },
+    { name: "高嘉鴻", title: "董事｜地方創生工作者" },
+  ],
+  advisors: [
+    { name: "杜蘊潔", title: "職涯諮詢顧問｜諮商心理師" },
+    { name: "馮啟安", title: "課程顧問｜教育研究所副教授" },
+    { name: "簡郁婷", title: "人才發展顧問｜上市公司人資長" },
+    { name: "羅尚文", title: "公益治理顧問｜非營利組織律師" },
+  ],
 }
 
 /** 陪伴哲學四原則（about/approach）——依課程設計文件方法論整理 */

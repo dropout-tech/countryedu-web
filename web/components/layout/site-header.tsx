@@ -348,7 +348,7 @@ export function SiteHeader() {
             : "border-transparent bg-background/70 backdrop-blur-sm",
         )}
       >
-        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6 md:px-10">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-7 md:px-12 lg:px-16">
           <Link href="/" className="flex items-center" aria-label={`${brand.shortName}首頁`}>
             <Image
               src="/logo.png"
@@ -405,7 +405,7 @@ export function SiteHeader() {
       {/* 行動選單（置於 header 之外，避免 header 的 backdrop-filter 成為 fixed 包含區塊） */}
       {mobileOpen && (
         <div className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto border-t border-border bg-background lg:hidden">
-          <nav aria-label="行動選單" className="mx-auto w-full max-w-7xl px-6 py-6">
+          <nav aria-label="行動選單" className="mx-auto w-full max-w-7xl px-7 py-6">
             <ul className="flex flex-col gap-1">
               {headerMenu.map((section) => (
                 <MobileSection

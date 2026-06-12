@@ -5,9 +5,9 @@ import { audiences, nav } from "@/lib/site"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { Button } from "@/components/ui/button"
 
-/** 內容置中容器 */
+/** 內容置中容器——兩側留白刻意偏寬（2026-06-12 甲方回饋：內容不要太靠兩側） */
 export function Container({ className, children }: { className?: string; children: React.ReactNode }) {
-  return <div className={cn("mx-auto w-full max-w-6xl px-6 md:px-10", className)}>{children}</div>
+  return <div className={cn("mx-auto w-full max-w-6xl px-7 md:px-12 lg:px-16", className)}>{children}</div>
 }
 
 /** 區段垂直留白包裹 */

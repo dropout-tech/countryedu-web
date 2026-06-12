@@ -8,7 +8,7 @@ export function SiteFooter() {
 
   return (
     <footer className="border-t border-border bg-secondary/40">
-      <div className="mx-auto w-full max-w-6xl px-6 py-14 md:px-10 md:py-16">
+      <div className="mx-auto w-full max-w-6xl px-7 py-14 md:px-12 md:py-16 lg:px-16">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_2fr]">
           {/* 品牌區 */}
           <div className="max-w-sm">
