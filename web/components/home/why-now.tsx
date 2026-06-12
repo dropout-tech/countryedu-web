@@ -8,7 +8,7 @@ import { generationIssue, journeyVocab } from "@/lib/site"
 /**
  * 世代課題（Why Now）：青年焦慮數據 + 實際心聲。
  * variant="path"（版本 B）：eyebrow 套路途語彙「迷霧」＋圖標、無框線（與 WaveSeam 接縫相鄰）、等高線底紋。
- * variant="flow"（版本 A 連續敘事版）：白底無框線，與前後段以曲線銜接。
+ * variant="flow"（版本 A 連續敘事版）：亮綠滿版、白字大標，上下白底曲線（FlowCap）咬入，正文落白卡。
  */
 export function WhyNow({ variant }: { variant?: "path" | "flow" } = {}) {
   return (

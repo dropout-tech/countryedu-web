@@ -103,6 +103,16 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
+  /* z-index 語意級距（取代散落的魔術數字，尤其游標原本的 9999）。
+     decor 10（區塊裝飾）< sticky 50（黏頂頁首）< overlay 50（浮動控制）
+     < modal 100（Dialog／skip link）< cursor 1000（自訂游標恆在最上層）。
+     頁首 z-50、Dialog z-[100]、裝飾 z-10 已落同階，後續可漸進改用本組 token。 */
+  --z-decor: 10;
+  --z-sticky: 50;
+  --z-overlay: 50;
+  --z-modal: 100;
+  --z-skip: 100;
+  --z-cursor: 1000;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -232,7 +242,9 @@
   .hl-sun {
     background-image: linear-gradient(transparent 62%, var(--neon-sun) 62%, var(--neon-sun) 95%, transparent 95%);
   }
-  .reveal {
+  /* 漸進增強：預設可見；僅在有 JS 時（<html class="js">）才先隱藏再於進場淡入。
+     無 JS／不執行 JS 的爬蟲不會看到整段空白。reduced-motion 仍一律直接顯示。 */
+  .js .reveal {
     opacity: 0;
     transform: translateY(24px);
     transition:
@@ -241,7 +253,7 @@
     transition-delay: var(--reveal-delay, 0ms);
     will-change: opacity, transform;
   }
-  .reveal.is-visible {
+  .js .reveal.is-visible {
     opacity: 1;
     transform: none;
   }

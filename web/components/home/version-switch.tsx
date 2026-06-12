@@ -13,7 +13,7 @@ export function VersionSwitch({ current }: { current: "a" | "b" }) {
       active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
     )
   return (
-    <div className="fixed bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1 rounded-full border border-border bg-card/95 p-1 pl-4 shadow-lg backdrop-blur-sm">
+    <div className="fixed bottom-5 left-1/2 z-[var(--z-overlay)] flex -translate-x-1/2 items-center gap-1 rounded-full border border-border bg-card/95 p-1 pl-4 shadow-lg backdrop-blur-sm">
       <span className="mr-1 whitespace-nowrap text-xs font-medium text-muted-foreground">首頁版本</span>
       <Link href="/" className={pill(current === "a")} aria-current={current === "a" ? "page" : undefined}>
         A

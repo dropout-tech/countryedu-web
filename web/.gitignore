@@ -17,3 +17,9 @@ node_modules
 *.tsbuildinfo
 .env
 .claude/settings.local.json
+
+# Claude skill tooling artifacts
+.agents/
+.claude/skills/
+.impeccable/
+out/

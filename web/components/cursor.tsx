@@ -72,12 +72,12 @@ export function Cursor() {
       <div
         ref={dotRef}
         aria-hidden="true"
-        className="pointer-events-none fixed left-0 top-0 z-[9999] size-2 rounded-full bg-primary opacity-0"
+        className="pointer-events-none fixed left-0 top-0 z-[var(--z-cursor)] size-2 rounded-full bg-primary opacity-0"
       />
       <div
         ref={ringRef}
         aria-hidden="true"
-        className="cursor-ring pointer-events-none fixed left-0 top-0 z-[9999] rounded-full opacity-0 transition-[width,height,background-color,border-color] duration-200"
+        className="cursor-ring pointer-events-none fixed left-0 top-0 z-[var(--z-cursor)] rounded-full opacity-0 transition-[width,height,background-color,border-color] duration-200"
       />
     </>
   )

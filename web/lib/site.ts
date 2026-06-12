@@ -56,6 +56,11 @@ export const generationIssue = {
     { value: "94.6%", label: "青年求職焦慮指數", source: "yes123 求職網 2025 年調查" },
     { value: "11.6%", label: "15–24 歲青年失業率", source: "2025 年行政院主計處" },
   ],
+  /** 94.6% 焦慮指數下的兩項細項（同 yes123 2025 調查；about/mission 使用） */
+  subData: [
+    { value: "87%", label: "焦慮不會寫自傳" },
+    { value: "70%", label: "憂面試口語表達" },
+  ],
   voices: ["努力很多，但不知道方向", "不知道自己適合什麼", "害怕選錯", "不確定自己能力是否有價值"],
   conclusion: "比起更早做決定，青年更需要的是「理解自己與社會的能力」。",
 } as const
@@ -113,13 +118,15 @@ export const threeStages = [
   },
 ] as const
 
-/** 大事紀（創立故事 timeline） */
+/** 大事紀（創立故事 timeline）——2016／2020 起點與 2022 命名文案依甲方「鄉育的起點」（2026-06） */
 export const milestones = [
+  { year: "2016", text: "看見台灣各地的資源差異與社會議題。" },
+  { year: "2020", text: "實際走入地方，第一線訪談 1,000 多位學子與青年，萌生重建教育系統的想法。" },
   {
     year: "2021",
     text: "配合教育部 108 課綱，在台南北門農工與北門高中舉辦首次學習歷程檔案輔導工作坊。",
   },
-  { year: "2022", text: "財團法人鄉育教育基金會正式成立。" },
+  { year: "2022", text: "舉行記者會，正式命名為《鄉育教育基金會》。" },
   {
     year: "2023",
     text: "與雙北、新竹、桃園、台中、嘉義、台南、高雄、花蓮等偏遠與非山非市地區高中，展開學習歷程講座與深度工作坊合作。",
@@ -137,6 +144,37 @@ export const milestones = [
     text: "與青澀芷蘭協會合作，完成線上職涯探索課程，輔導經濟弱勢大學生；於成功大學、高雄師範大學完成 16 週選修課程；與成功大學教育研究所展開學術研究計畫合作。",
   },
 ] as const
+
+/** 大事紀章節（about/story）——把 milestones 分成三段路程敘事 */
+export const milestoneChapters = [
+  { no: "01", title: "看見與走入", range: "2016–2020", years: ["2016", "2020"] },
+  { no: "02", title: "扎根高中", range: "2021–2024", years: ["2021", "2022", "2023", "2024"] },
+  { no: "03", title: "走向大學與系統", range: "2025–2026", years: ["2025", "2026"] },
+] as const
+
+/**
+ * 創立起點（about/story 關鍵轉折）——事實依甲方「鄉育的起點」（2026-06），
+ * 敘事文案為草稿，定稿待甲方確認。
+ */
+export const originStory: {
+  turns: { year: string; title: string; text: string; stat?: { value: string; label: string } }[]
+  bridge: string
+} = {
+  turns: [
+    {
+      year: "2016",
+      title: "看見",
+      text: "看見台灣各地的資源差異與社會議題——同一個世代的青年，站在很不一樣的起跑線上。",
+    },
+    {
+      year: "2020",
+      title: "走入",
+      text: "不只遠遠地看，而是實際走入地方。在第一線與學子和青年對話——聽他們說迷惘、說限制、說想去卻不知道怎麼去的地方。",
+      stat: { value: "1,000+", label: "第一線訪談的學子與青年" },
+    },
+  ],
+  bridge: "一千多段對話之後，「重建教育系統」的想法萌生——2021 年，我們走進台南北門，從第一場工作坊開始。",
+}
 
 /** 16 週螺旋課程設計（Programs / journey） */
 export const spirals = [
@@ -245,6 +283,8 @@ export const futureSkills = {
     "根據世界經濟論壇（WEF）《2025 年未來就業報告》，2030 年預測全球將有 39% 的現有職場技能被淘汰或進入重大轉型。調查中超過 1,000 個企業雇主最重視的前十大核心技能，其中八項屬於軟實力，將是 AI 難以取代的關鍵。鄉育對標美國 NACE，全球公認的職業準備度指標（Career Readiness），賦能青年面對不斷快速變動的世界。",
   hard: 20,
   soft: 80,
+  /** WEF 預測之技能變動幅度（about/mission 大數字使用） */
+  disruption: { value: "39%", label: "現有職場技能將於 2030 年前被淘汰或進入重大轉型", source: "WEF《2025 年未來就業報告》" },
   skills: [
     { zh: "動機與自我覺察", en: "Motivation & self awareness", soft: true },
     { zh: "創意思考", en: "Creative thinking", soft: true },
@@ -547,6 +587,28 @@ export const corporateProgram = {
     { step: "04", title: "影響力回顧", text: "以結案報告與數據，看見投入創造的改變。" },
   ],
 } as const
+
+/**
+ * 三層陪伴結構（about/team）——帶路的不是一個人，而是一個結構；
+ * 事實取自 Sales Kit（引導員培訓、企業導師制度）。
+ */
+export const guideRoles = [
+  {
+    title: "專案督導",
+    subtitle: "規劃路線的人",
+    text: "設計課程與評估系統，帶領每一梯次的現場——把方法論變成一條真的可以走的路。",
+  },
+  {
+    title: "大學生引導員",
+    subtitle: "走在前面一點的人",
+    text: "自 2024 年起與國立成功大學合作培訓，由受訓的大學生陪伴高中生探索——學長姐帶著學弟妹走。",
+  },
+  {
+    title: "企業導師",
+    subtitle: "走過這條路的人",
+    text: "以業界視角回饋學生的專案實作成果（如 MediaTek 企業導師制度），讓真實世界的聲音走進課堂。",
+  },
+] as const
 
 /** 團隊成員（about/team）——TODO：完整名單、董事會／顧問群與照片素材待基金會提供 */
 export type TeamMember = { name: string; en?: string; title: string; bio?: string }

@@ -15,7 +15,7 @@ import { brand, threeStages } from "@/lib/site"
  * 外層只留階段名稱與一句副標，細節以點擊彈窗承接（會議肯定的「點開再看」模式）。
  * 與「能力螺旋」是不同層級：這裡是宏觀旅程，螺旋是專案內的能力循環。
  * variant="path"（版本 B）：階段徽章與導言套 waypoint 路途語彙。
- * variant="flow"（版本 A 連續敘事版）：深林綠滿版（路徑開進隧道），上下曲線過渡。
+ * variant="flow"（版本 A 連續敘事版）：路徑橘滿版（v3.3 改橘，原深綠隧道已退役），上下曲線過渡。
  */
 export function ProgramStrip({ variant }: { variant?: "path" | "flow" } = {}) {
   const flow = variant === "flow"

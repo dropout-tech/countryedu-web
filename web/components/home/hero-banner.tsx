@@ -87,7 +87,7 @@ export function HeroBanner({ variant }: { variant?: "path" | "flow" }) {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button size="lg" className="group h-12 px-7 text-base" render={<Link href="/about" />}>
+            <Button size="lg" className="group h-12 px-7 text-base" render={<Link href="/about/mission" />}>
               認識鄉育
               <ArrowRight
                 className="ml-1 size-5 transition-transform group-hover:translate-x-1"
