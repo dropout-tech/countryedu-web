@@ -12,6 +12,7 @@
 
 # 僅放行以下要版控的項目（敏感商務檔不在此列 → 自動排除）
 !/web/
+!/.github/
 !/design/
 !/README.md
 !/.gitignore
