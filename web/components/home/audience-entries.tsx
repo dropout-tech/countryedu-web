@@ -8,14 +8,15 @@ import { audiences } from "@/lib/site"
 
 /**
  * 分眾入口（CTA 前）：學生／企業／捐款人／學校，連到既有 /for/* 入口頁。
- * 各角色配一個代表色，沿用首頁色彩規劃：
- * 學生＝鄉育綠（品牌主色）、企業＝藍、捐款人＝暖陽橘（品牌強調色）、學校＝紫。
+ * 角色色依色彩系統「06 分眾 Accent」（design/color-system/color-system.html）：
+ * 學生＝暖陽橘、企業＝藍圖青、捐款人＝珊瑚暖、學校＝深松綠。
+ * fg＝該 accent 滿底時的文字色——暖陽橘／珊瑚暖上禁壓白字，配深色字。
  */
 const ROLES = {
-  "/for/students": { icon: GraduationCap, hue: "#4a9023" },
-  "/for/companies": { icon: Building2, hue: "#2f9df0" },
-  "/for/donors": { icon: HeartHandshake, hue: "#f5921e" },
-  "/for/universities": { icon: School, hue: "#b87fe0" },
+  "/for/students": { icon: GraduationCap, hue: "#f5921e", fg: "#2a1b05" },
+  "/for/companies": { icon: Building2, hue: "#1a7479", fg: "#ffffff" },
+  "/for/donors": { icon: HeartHandshake, hue: "#ff7a5c", fg: "#3a1206" },
+  "/for/universities": { icon: School, hue: "#2e6b4e", fg: "#ffffff" },
 } as const
 
 /**
@@ -56,14 +57,19 @@ export function AudienceEntries({ variant }: { variant?: "flow" | "path" } = {})
               <ScrollReveal key={a.href} delay={i * 110} className="h-full">
                 <Link
                   href={a.href}
-                  style={{ "--role": role?.hue ?? "var(--primary)" } as CSSProperties}
-                  className={`group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-[var(--role)] ${variant === "path" ? "glow-neon" : variant === "flow" ? "hover:shadow-[0_16px_36px_-12px_var(--role)]" : "hover:shadow-lg"}`}
+                  style={
+                    {
+                      "--role": role?.hue ?? "var(--primary)",
+                      "--role-fg": role?.fg ?? "#ffffff",
+                    } as CSSProperties
+                  }
+                  className={`group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-[var(--role)] ${variant === "flow" ? "hover:shadow-[0_16px_36px_-12px_var(--role)]" : "hover:shadow-lg"}`}
                 >
                   <span
                     aria-hidden="true"
                     className="absolute inset-x-0 top-0 h-1.5 bg-[var(--role)] opacity-80 transition-opacity group-hover:opacity-100"
                   />
-                  <span className="inline-flex size-11 items-center justify-center rounded-xl bg-[color-mix(in_oklab,var(--role)_14%,transparent)] text-[var(--role)] transition-colors group-hover:bg-[var(--role)] group-hover:text-white">
+                  <span className="inline-flex size-11 items-center justify-center rounded-xl bg-[color-mix(in_oklab,var(--role)_14%,transparent)] text-[var(--role)] transition-colors group-hover:bg-[var(--role)] group-hover:text-[var(--role-fg)]">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
                   <h3 className="mt-4 text-xl font-bold text-foreground">{a.title}</h3>

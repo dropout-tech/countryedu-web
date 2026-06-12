@@ -9,52 +9,45 @@ import { heroStats } from "@/lib/site"
  * variant 預設＝版本 A 舊版（白底匯聚旅程）；
  * "flow"＝版本 A（連續敘事版）：米白暖底＋全彩路徑線＋底部曲線過渡；
  * "path"＝版本 B（敘事版）：無箭頭的交錯路網，呼應「尋路」路途語彙。
+ * "card"＝版本 C（卡片版）：用版本 B 的滿幅路網、透明度提回 100%，
+ *   左側標題／描述／影響力數據改成卡片——卡片本身提供不透明襯底，
+ *   故路網可滿彩不需淡化（2026-06-12 使用者指定）。
+ *   底色不用純白，改極淺米白 #fbf8f1（自 v4 陶土米／麥田米暖米族大幅提亮；2026-06-12 使用者指定）。
  */
-export function HeroBanner({ variant }: { variant?: "path" | "flow" }) {
-  const Journey = variant === "path" ? NetworkWeave : ConvergingJourney
+export function HeroBanner({ variant }: { variant?: "path" | "flow" | "card" }) {
+  const Journey = variant === "path" || variant === "card" ? NetworkWeave : ConvergingJourney
+  const card = variant === "card"
   const flow = variant === "flow"
   return (
     <section
       aria-label="鄉育教育基金會主視覺"
-      className="relative isolate w-full overflow-hidden bg-background"
+      className={`relative isolate w-full overflow-hidden ${card ? "bg-[#fbf8f1]" : "bg-background"}`}
     >
-      {/* 創意背景：全幅、柔和、無黑色遮罩（flow／path：全彩、不再半透明洗白） */}
+      {/* 創意背景：全幅路徑圖，統一低透明度當背景紋理——
+         無漸層、無光暈，深色標題直接壓在淡化的路網上仍可讀（2026-06-12 使用者指定）。
+         劑量靠這一個 opacity 類別調整。card＝版本 C：文字改卡片有不透明襯底，故路網滿彩 100%。 */}
       <Journey
         preserveAspectRatio="xMidYMid slice"
         strokeWidth={18}
-        className={`pointer-events-none absolute inset-0 -z-10 h-full w-full ${variant ? "opacity-100" : "opacity-50"}`}
-      />
-      {/* 讓文字更清晰的亮光（path：縮小變淡，只護標題、讓路網滿彩） */}
-      <div
-        aria-hidden="true"
-        className={
-          variant === "path"
-            ? "absolute inset-0 -z-10 bg-[radial-gradient(ellipse_44%_46%_at_30%_44%,theme(colors.background)_38%,transparent_85%)]"
-            : "absolute inset-0 -z-10 bg-[radial-gradient(ellipse_46%_50%_at_32%_45%,theme(colors.background)_55%,transparent_100%)]"
-        }
-      />
-      <div
-        aria-hidden="true"
-        className={`absolute -left-24 -top-24 -z-10 size-[26rem] rounded-full blur-3xl ${variant === "path" ? "bg-primary/25" : "bg-primary/10"}`}
-      />
-      <div
-        aria-hidden="true"
-        className={`absolute -right-24 bottom-0 -z-10 size-[22rem] rounded-full blur-3xl ${variant === "path" ? "bg-sun-gold/35" : "bg-accent/10"}`}
+        className={`pointer-events-none absolute inset-0 -z-10 h-full w-full ${card ? "opacity-100" : variant ? "opacity-20" : "opacity-50"}`}
       />
 
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-6 py-20 md:px-10 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:py-28">
         {/* 左：文字 */}
         <div className="flex flex-col items-start text-left">
-          {/* path：基金會徽章移除（2026-06-11 使用者指定），標題直接開場 */}
-          {variant !== "path" && (
+          {/* path／card：基金會徽章移除（2026-06-11 使用者指定），標題直接開場 */}
+          {variant !== "path" && !card && (
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
               <Compass className="size-4" aria-hidden="true" />
               <span>財團法人鄉育教育基金會 CountryEDU</span>
             </div>
           )}
 
+          {/* card＝版本 C：標題＋描述＋按鈕包進一張卡片，於滿彩路網上提供不透明襯底。
+             非 card 用 display:contents，版本 A／B 版面完全不受影響。 */}
+          <div className={card ? "w-full rounded-3xl border border-border bg-card p-7 sm:p-8" : "contents"}>
           <h1
-            className={`text-4xl font-black leading-[1.2] tracking-tight text-foreground sm:text-5xl lg:text-[3.4rem] ${variant === "path" ? "mt-0" : "mt-7"}`}
+            className={`text-4xl font-black leading-[1.2] tracking-tight text-foreground sm:text-5xl lg:text-[3.4rem] ${variant === "path" || card ? "mt-0" : "mt-7"}`}
           >
             陪青年
             <span className="whitespace-nowrap">
@@ -103,11 +96,15 @@ export function HeroBanner({ variant }: { variant?: "path" | "flow" }) {
               探索尋路計畫
             </Button>
           </div>
+          </div>
 
-          {/* 影響力數據 */}
+          {/* 影響力數據（card＝版本 C：每項數據獨立成卡片） */}
           <dl className="mt-10 grid grid-cols-3 gap-6 sm:gap-10">
             {heroStats.map((stat) => (
-              <div key={stat.label} className="flex flex-col gap-0.5">
+              <div
+                key={stat.label}
+                className={`flex flex-col gap-0.5 ${card ? "rounded-2xl border border-border bg-card px-4 py-3" : ""}`}
+              >
                 <dt className="text-2xl font-black text-primary sm:text-3xl">
                   {stat.value}
                   {variant === "path" && (
@@ -125,7 +122,7 @@ export function HeroBanner({ variant }: { variant?: "path" | "flow" }) {
         {/* 右：橫式照片 —— 匯聚旅程的終點 */}
         <div className="relative">
           <div
-            className={`relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] border-4 border-card bg-card sm:aspect-[16/11] ${variant === "path" ? "glow-neon" : "shadow-xl ring-1 ring-border"}`}
+            className="relative aspect-[4/3] w-full overflow-hidden rounded-[2rem] border-4 border-card bg-card ring-1 ring-border sm:aspect-[16/11]"
           >
             <Image
               src="/banner/students.jpg"

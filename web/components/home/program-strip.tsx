@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, Sparkle } from "lucide-react"
 import { Container } from "@/components/page-shell"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { StageDialogContent, stageBadgeClass } from "@/components/programs/stage-dialog"
@@ -9,6 +9,36 @@ import { FlowCap } from "@/components/home/flow-decor"
 import { ContourBg } from "@/components/section-decor"
 import { stageIcons } from "@/components/journey-icons"
 import { brand, threeStages } from "@/lib/site"
+
+/**
+ * 「成為未來」抵達徽記：卡片內外散佈的細緻微光（小、淺、精緻）。版本 A／B 皆用。
+ * 卡片無 overflow-hidden，故負位移的星星會溢出卡片邊緣＝「外部」。
+ * 版本 A（flow，橘底）外圈用白光、版本 B（path，淺底）外圈用金光；內部一律暖金。
+ * 動畫＝.motion-twinkle，reduced-motion 時自動靜止（globals.css）。
+ */
+function FutureSparkles({ flow }: { flow: boolean }) {
+  const stars = [
+    // 內部（白卡上的暖金細星）
+    { pos: "right-5 top-4", size: "size-4", tone: "text-sun-gold/80", delay: "0s", dur: "2.6s" },
+    { pos: "right-12 top-10", size: "size-2.5", tone: "text-sun-gold/60", delay: "0.6s", dur: "3.2s" },
+    { pos: "bottom-6 left-7", size: "size-2", tone: "text-sun-gold/45", delay: "1.2s", dur: "2.9s" },
+    // 外部（溢出卡片邊緣）
+    { pos: "-right-3 -top-3", size: "size-4", tone: flow ? "text-white/90" : "text-sun-gold/80", delay: "0.2s", dur: "2.8s" },
+    { pos: "-right-4 top-8", size: "size-2.5", tone: flow ? "text-white/70" : "text-sun-gold/60", delay: "0.9s", dur: "3.3s" },
+    { pos: "-bottom-3 right-10", size: "size-2", tone: flow ? "text-white/65" : "text-sun-gold/55", delay: "1.5s", dur: "3.0s" },
+  ]
+  return (
+    <span aria-hidden="true" className="pointer-events-none absolute inset-0">
+      {stars.map((s, i) => (
+        <Sparkle
+          key={i}
+          className={`motion-twinkle absolute ${s.pos} ${s.size} ${s.tone} fill-current`}
+          style={{ animationDelay: s.delay, animationDuration: s.dur }}
+        />
+      ))}
+    </span>
+  )
+}
 
 /**
  * 尋路計畫宏觀旅程窄帶：一條由左至右的路（認識自己→勇敢實踐→成為未來）。
@@ -73,6 +103,7 @@ export function ProgramStrip({ variant }: { variant?: "path" | "flow" } = {}) {
                 <div
                   className={`group relative flex w-full flex-col items-start gap-1 rounded-3xl border border-border bg-card p-6 transition-all hover:-translate-y-1 md:items-center md:text-center ${variant === "path" ? "glow-neon" : flow ? "hover:shadow-xl" : "hover:shadow-lg"}`}
                 >
+                  {s.slug === "become-your-future" && <FutureSparkles flow={flow} />}
                   <span className={`${stageBadgeClass(s.color)} inline-flex items-center gap-1`}>
                     {variant === "path" && WaypointIcon && (
                       <WaypointIcon className="size-3.5" aria-hidden="true" />

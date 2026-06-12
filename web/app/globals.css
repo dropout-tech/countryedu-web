@@ -227,6 +227,20 @@
   }
 }
 
+/* 「成為未來」抵達微光：細緻 twinkle（淺淺地一閃一閃；reduced-motion 時靜止，見下方 media）。
+   元件用色已自帶 alpha 決定「淺」，此處 opacity 僅做明滅、scale 做呼吸。 */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.82);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Scroll Reveal —— 由 <ScrollReveal> 元件以 IntersectionObserver 觸發 */
 @layer utilities {
   /* 版本 B 明亮語彙：白卡外的螢光綠光暈（2026-06-11 使用者指定） */
@@ -234,6 +248,11 @@
     box-shadow:
       0 0 0 1.5px color-mix(in oklab, var(--neon-leaf) 70%, transparent),
       0 0 22px 5px color-mix(in oklab, var(--neon-leaf) 40%, transparent);
+  }
+  /* 「成為未來」抵達微光：細緻 twinkle（reduced-motion 時靜止，見檔末 media） */
+  .motion-twinkle {
+    animation: twinkle 2.8s ease-in-out infinite;
+    transform-origin: center;
   }
   /* 標題螢光筆底線：文字下半鋪一條螢光色帶（綠／橘交替使用） */
   .hl-leaf {
@@ -280,7 +299,8 @@
 @media (prefers-reduced-motion: reduce) {
   .motion-draw,
   .motion-node,
-  .motion-float {
+  .motion-float,
+  .motion-twinkle {
     animation: none !important;
     stroke-dashoffset: 0 !important;
     opacity: 1 !important;
