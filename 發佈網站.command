@@ -4,7 +4,18 @@
 set -u
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 
-cd "$(dirname "$0")" || { echo "找不到專案資料夾"; exit 1; }
+# 內建專案位置，按鈕本身放哪裡（桌面、Dock…）都能用；
+# 若按鈕仍在專案資料夾內，則以按鈕所在位置為準（專案整個搬家也不用改）。
+PROJECT_DIR="/Users/cai_yijin/Downloads/education-foundation-website"
+SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)"
+if [ -d "$SCRIPT_DIR/.git" ] && [ -d "$SCRIPT_DIR/web" ]; then
+  PROJECT_DIR="$SCRIPT_DIR"
+fi
+cd "$PROJECT_DIR" || {
+  echo "✗ 找不到專案資料夾：$PROJECT_DIR"
+  echo "  （如果專案搬家了，開 Claude Code 說「更新發佈按鈕的專案路徑」）"
+  read -r -p "按 Enter 關閉視窗…"; exit 1
+}
 
 echo "🌱 鄉育官網發佈程序"
 echo "────────────────────────────"
