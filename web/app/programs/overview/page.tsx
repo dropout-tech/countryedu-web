@@ -86,7 +86,8 @@ export default function Page() {
       {/* ③ 走法：四能力螺旋循環（方法層，只談循環／象限） */}
       <Section>
         <SectionHeading eyebrow={<ActEyebrow act={actWalk} />} title={actWalk.title} description={actWalk.lead} />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* 循環順序卡：直排或單行，不換行成格（2026-06-12 甲方回饋） */}
+        <div className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-4">
           {spiralPhases.map((p, i) => (
             <ScrollReveal key={p.key} delay={i * 100} className="h-full">
               <div

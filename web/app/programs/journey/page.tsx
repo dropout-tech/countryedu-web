@@ -80,10 +80,11 @@ export default function Page() {
           title="課程培養的七大核心工作能力"
           description="這不是某個職稱的職前訓練，而是一套跨產業、跨職能皆可遷移的核心工作能力。"
         />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* 順序清單：單欄直排（2026-06-12 甲方回饋：編號項目不換行成格） */}
+        <div className="mx-auto mt-12 flex max-w-3xl flex-col gap-3">
           {coreSkills.map((skill, i) => (
-            <ScrollReveal key={skill} delay={(i % 3) * 100} className="h-full">
-              <div className="flex h-full items-center gap-4 rounded-2xl border border-border bg-card p-5">
+            <ScrollReveal key={skill} delay={i * 60}>
+              <div className="flex items-center gap-4 rounded-2xl border border-border bg-card p-5">
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-sm font-black text-primary">
                   {String(i + 1).padStart(2, "0")}
                 </span>

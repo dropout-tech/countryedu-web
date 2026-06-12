@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, Quote } from "lucide-react"
-import { PageHeader, Section, findCrumbs } from "@/components/page-shell"
+import { Figure, PageHeader, Section, findCrumbs } from "@/components/page-shell"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { Button } from "@/components/ui/button"
 import { pageMeta } from "@/lib/seo"
@@ -71,6 +71,13 @@ export default function Page() {
 
       {/* 三站路線圖：迷霧 → 使命 → 未來 */}
       <Section>
+        <Figure
+          src="/about/students-walking-park.jpg"
+          alt="四位青年學子在綠意校園中邊走邊談、開懷而笑"
+          caption="鄉育想陪伴的，是正在尋找方向、準備走向未來的青年世代"
+          priority
+          className="mb-16 md:mb-20"
+        />
         <ol className="space-y-16 md:space-y-20">
           {/* 站 01：Why Now 世代課題 */}
           <Station
@@ -79,41 +86,34 @@ export default function Page() {
             title="台灣社會正在面對的世代課題"
             description={generationIssue.lead}
           >
-            <div className="grid gap-6 lg:grid-cols-2">
-              <ScrollReveal className="h-full">
-                <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-7">
-                  <p className="text-5xl font-black text-primary">{generationIssue.data[0].value}</p>
-                  <p className="mt-3 font-semibold text-foreground">{generationIssue.data[0].label}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{generationIssue.data[0].source}</p>
-                  <ul className="mt-5 space-y-2.5 border-t border-border pt-5">
-                    {generationIssue.subData.map((s) => (
-                      <li key={s.label} className="flex items-baseline justify-between gap-3 text-sm">
-                        <span className="text-muted-foreground">{s.label}</span>
-                        <span className="text-lg font-black text-primary">{s.value}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </ScrollReveal>
-              <div className="grid gap-6">
-                <ScrollReveal delay={100} className="rounded-3xl border border-border bg-card p-7">
-                  <p className="text-5xl font-black text-primary">{generationIssue.data[1].value}</p>
-                  <p className="mt-3 font-semibold text-foreground">{generationIssue.data[1].label}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{generationIssue.data[1].source}</p>
+            {/* 數據一行四卡＋心聲整幅（2026-06-12 甲方回饋：原雙欄高低交錯的排法不對齊） */}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                generationIssue.data[0],
+                { ...generationIssue.subData[0], source: generationIssue.data[0].source },
+                { ...generationIssue.subData[1], source: generationIssue.data[0].source },
+                generationIssue.data[1],
+              ].map((d, i) => (
+                <ScrollReveal key={d.label} delay={i * 80} className="h-full">
+                  <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-6">
+                    <p className="text-4xl font-black text-primary lg:text-5xl">{d.value}</p>
+                    <p className="mt-3 flex-1 text-pretty font-semibold text-foreground">{d.label}</p>
+                    <p className="mt-2 text-xs text-muted-foreground">{d.source}</p>
+                  </div>
                 </ScrollReveal>
-                <ScrollReveal delay={160} className="rounded-3xl border border-border bg-card p-7">
-                  <p className="font-semibold text-foreground">青年實際心聲</p>
-                  <ul className="mt-4 space-y-3">
-                    {generationIssue.voices.map((v) => (
-                      <li key={v} className="flex items-start gap-3 text-muted-foreground">
-                        <Quote className="mt-1 size-4 shrink-0 text-accent" aria-hidden="true" />
-                        <span>{v}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </ScrollReveal>
-              </div>
+              ))}
             </div>
+            <ScrollReveal delay={120} className="mt-4 rounded-3xl border border-border bg-card p-7">
+              <p className="font-semibold text-foreground">青年實際心聲</p>
+              <ul className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+                {generationIssue.voices.map((v) => (
+                  <li key={v} className="flex items-start gap-3 text-muted-foreground">
+                    <Quote className="mt-1 size-4 shrink-0 text-accent" aria-hidden="true" />
+                    <span>{v}</span>
+                  </li>
+                ))}
+              </ul>
+            </ScrollReveal>
             <ScrollReveal className="mt-6 rounded-2xl bg-primary/10 p-6 text-center">
               <p className="text-pretty text-lg font-semibold text-primary">{generationIssue.conclusion}</p>
             </ScrollReveal>
@@ -156,6 +156,14 @@ export default function Page() {
           >
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
               <div className="grid gap-6">
+                {/* 照片併入左欄與數據同排（2026-06-12 甲方回饋：照片與內容並排、不另起整幅） */}
+                <Figure
+                  src="/about/student-laptop-grass.jpg"
+                  alt="一位青年坐在草地上使用筆電，背景有同伴一起學習"
+                  caption="在真實專案裡累積的軟實力，是 AI 時代最難被取代的裝備"
+                  aspect="aspect-[16/10]"
+                  sizes="(max-width: 1024px) 92vw, 480px"
+                />
                 <ScrollReveal className="rounded-3xl border border-border bg-card p-7">
                   <p className="text-5xl font-black text-primary">{futureSkills.disruption.value}</p>
                   <p className="mt-3 text-pretty font-semibold text-foreground">{futureSkills.disruption.label}</p>

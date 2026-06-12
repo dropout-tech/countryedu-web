@@ -65,7 +65,8 @@ export default function Page() {
       {/* 合作流程 + CTA */}
       <Section>
         <SectionHeading eyebrow="怎麼開始" title="合作流程" />
-        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* 順序步驟：直排或單行，不換行成格（2026-06-12 甲方回饋） */}
+        <ol className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-4">
           {universityProgram.steps.map((s, i) => (
             <ScrollReveal as="li" key={s} delay={i * 100} className="h-full">
               <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-6">

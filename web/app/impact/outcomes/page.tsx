@@ -28,9 +28,10 @@ export default function Page() {
           title="動態成長數位履歷的五大證據"
           description="每位學生在 16 週裡累積的真實紀錄——讓軟實力說得出口、拿得出手。"
         />
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {/* 順序卡：直排或單行，不換行成格（2026-06-12 甲方回饋） */}
+        <div className="mt-12 grid grid-cols-1 gap-4 lg:grid-cols-5">
           {digitalPortfolio.map((d, i) => (
-            <ScrollReveal key={d.title} delay={(i % 3) * 100} className="h-full">
+            <ScrollReveal key={d.title} delay={i * 80} className="h-full">
               <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-6">
                 <span className="text-sm font-black text-primary">{String(i + 1).padStart(2, "0")}</span>
                 <p className="mt-2 font-bold text-foreground">{d.title}</p>

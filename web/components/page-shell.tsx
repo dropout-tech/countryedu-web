@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { ChevronRight, Compass, Hammer } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -46,6 +47,51 @@ export function SectionHeading({
       )}
       <h2 className="text-balance text-3xl font-black tracking-tight text-foreground sm:text-4xl">{title}</h2>
       {description && <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">{description}</p>}
+    </ScrollReveal>
+  )
+}
+
+/**
+ * 內容照片：沿用 hero-banner 的相框語彙（border-4 border-card + ring）。
+ * 預設 16/9 橫式帶狀，可用 aspect 覆寫；caption 為選填圖說。
+ */
+export function Figure({
+  src,
+  alt,
+  caption,
+  aspect = "aspect-[16/9]",
+  sizes = "(max-width: 1024px) 92vw, 1024px",
+  priority = false,
+  className,
+}: {
+  src: string
+  alt: string
+  caption?: string
+  aspect?: string
+  sizes?: string
+  priority?: boolean
+  className?: string
+}) {
+  return (
+    <ScrollReveal as="figure" className={cn("group", className)}>
+      <div
+        className={cn(
+          "relative w-full overflow-hidden rounded-[2rem] border-4 border-card bg-card ring-1 ring-border",
+          aspect,
+        )}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority={priority}
+          sizes={sizes}
+          className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+        />
+      </div>
+      {caption && (
+        <figcaption className="mt-3 text-center text-sm text-muted-foreground">{caption}</figcaption>
+      )}
     </ScrollReveal>
   )
 }

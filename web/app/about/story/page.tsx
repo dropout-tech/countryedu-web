@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight, MapPin } from "lucide-react"
-import { PageHeader, Section, SectionHeading, findCrumbs } from "@/components/page-shell"
+import { Figure, PageHeader, Section, SectionHeading, findCrumbs } from "@/components/page-shell"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { Button } from "@/components/ui/button"
 import { pageMeta } from "@/lib/seo"
@@ -31,22 +31,33 @@ export default function Page() {
           title="從看見，到走入"
           description="嚮導之所以能帶路，是因為先走過。鄉育的起點，是兩個關鍵轉折。"
         />
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          {originStory.turns.map((t, i) => (
-            <ScrollReveal key={t.year} delay={i * 120} className="h-full">
-              <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-8">
-                <p className="text-sm font-black text-primary">{t.year}</p>
-                <h3 className="mt-2 text-2xl font-bold text-foreground">{t.title}</h3>
-                <p className="mt-4 flex-1 text-pretty leading-relaxed text-muted-foreground">{t.text}</p>
-                {t.stat && (
-                  <div className="mt-6 rounded-2xl bg-primary/10 p-5">
-                    <p className="text-4xl font-black text-primary">{t.stat.value}</p>
-                    <p className="mt-1 text-sm font-medium text-foreground/80">{t.stat.label}</p>
-                  </div>
-                )}
-              </div>
-            </ScrollReveal>
-          ))}
+        {/* 轉折卡直排＋照片並排右側（2026-06-12 甲方回饋：順序卡片直排、照片在右） */}
+        <div className="mt-12 grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+          <div className="flex flex-col gap-4">
+            {originStory.turns.map((t, i) => (
+              <ScrollReveal key={t.year} delay={i * 120}>
+                <div className="flex flex-col rounded-3xl border border-border bg-card p-7 md:p-8">
+                  <p className="text-sm font-black text-primary">{t.year}</p>
+                  <h3 className="mt-2 text-2xl font-bold text-foreground">{t.title}</h3>
+                  <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">{t.text}</p>
+                  {t.stat && (
+                    <div className="mt-5 rounded-2xl bg-primary/10 p-5">
+                      <p className="text-4xl font-black text-primary">{t.stat.value}</p>
+                      <p className="mt-1 text-sm font-medium text-foreground/80">{t.stat.label}</p>
+                    </div>
+                  )}
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+          <Figure
+            src="/about/students-walking-campus.jpg"
+            alt="三位青年學生在校園戶外邊走邊交談"
+            caption="嚮導之所以能帶路，是因為先走進了現場、走到青年身邊"
+            aspect="aspect-[16/10] lg:aspect-auto lg:flex-1"
+            sizes="(max-width: 1024px) 92vw, 560px"
+            className="flex flex-col lg:h-full"
+          />
         </div>
         <ScrollReveal className="mx-auto mt-10 max-w-2xl text-center">
           <p className="text-pretty text-lg font-semibold leading-relaxed text-foreground">{originStory.bridge}</p>
